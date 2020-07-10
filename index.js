@@ -21,6 +21,19 @@ const server = http.createServer((req, res) => {
         res.end(data);
       });
     }
+    else if (req.url === "/api/users") {
+      //imitation :  get users from database
+      res.writeHead(200, { "Content-Type": "text/json" });
+
+      const users = [
+        { name: "Valod", age: 19 },
+        { name: "Nune", age: 23 },
+      ];
+
+      const covertUsersToJson = JSON.stringify(users)
+      res.end(covertUsersToJson);
+
+    }
   }
   else if (method === "POST") {
     res.writeHead(201, { "Content-Type": "text/html" });
