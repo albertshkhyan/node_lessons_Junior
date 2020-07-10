@@ -1,41 +1,18 @@
-const http = require("http");
-const fs = require("fs");
-const path = require("path");
+/* #Express.js is a web application framework for Node.js. It provides various features that make web application development fast and easy which otherwise takes more time using only Node.js
+|| Express.js - это инфраструктура веб-приложений для Node.js. Он предоставляет различные функции, которые делают разработку веб-приложений быстрой и простой, что в противном случае занимает больше времени, используя только Node.js.
 
+ - https://www.tutorialsteacher.com/nodejs/expressjs
 
-const server = http.createServer((req, res) => {
-  const { method, url } = req;
+*/
+const express = require('express');
+// Creates an Express application. The express() function is a top-level function exported by the express module.
 
-  if (method === "GET") {
-    res.writeHead(200, { "Content-Type": "text/html" });
-    if (req.url === "/") {
-      fs.readFile(path.join(__dirname, "views", "index.html"), "utf-8", (err, data) => {
-        if (err) throw err;
-        res.end(data);
-      });
-    }
-    else if (req.url === "/about") {
-      res.writeHead(200, { "Content-Type": "text/html" });
-      fs.readFile(path.join(__dirname, "views", "about.html"), "utf-8", (err, data) => {
-        if (err) throw err;
-        res.end(data);
-      });
-    }
-  }
-  else if (method === "POST") {
-    res.writeHead(201, { "Content-Type": "text/html" });
-    const body = [];
-    req
-      .on("data", (chunk) => {
-        body.push(Buffer.from(chunk));
-      })
-      .on("end", () => {
-        const mssg = body.toString().split("=")[1];
-        res.end(`<h1>Your message is: ${mssg}</h1>`);
-      })
-  }
-});
+//express like createServer
+const PORT = process.env.PORT || 3000;
+//process.env.PORT is undefined
 
-server.listen(3000, () => {
-  console.log("Server is running...");
+const app = express();
+
+app.listen(PORT, () => {
+    console.log("Server is running...");
 });

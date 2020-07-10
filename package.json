@@ -1,5 +1,5 @@
 {
-  "name": "nodejs-junior-lessons",
+  "name": "NodeJS-Junior-Lessons",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -8,13 +8,21 @@
     "start": "node index.js",
     "dev": "nodemon index.js"
   },
-  "keywords": [
-    "nodeJS",
-    "js"
-  ],
-  "author": "Alik Shkhyan <alikshkhyan@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/albertshkhyan/node_lessons_Junior.git"
+  },
+  "keywords": [],
+  "author": "",
   "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/albertshkhyan/node_lessons_Junior/issues"
+  },
+  "homepage": "https://github.com/albertshkhyan/node_lessons_Junior#readme",
   "devDependencies": {
     "nodemon": "^2.0.4"
+  },
+  "dependencies": {
+    "express": "^4.17.1"
   }
 }
