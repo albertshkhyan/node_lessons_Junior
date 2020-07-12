@@ -1,114 +1,199 @@
-/* #Express.js is a web application framework for Node.js. It provides various features that make web application development fast and easy which otherwise takes more time using only Node.js
-|| Express.js - это инфраструктура веб-приложений для Node.js. Он предоставляет различные функции, которые делают разработку веб-приложений быстрой и простой, что в противном случае занимает больше времени, используя только Node.js.
+var express = require('express');
+var exphbs  = require('express-handlebars');
+ 
+var app = express();
+ 
 
- - https://www.tutorialsteacher.com/nodejs/expressjs
+////$1
+// app.engine('handlebars', exphbs());
+// app.set('view engine', 'handlebars');
+ 
+// app.get('/', function (req, res) {
+//     // res.render(__dirname + "/views/layouts/main.handlbars", {title : "my title"});//✅ without config extension must be handlebars
+//     /*
+//     Default search -> views/layouts/main.handlebars:
+//     views
+//         layouts
+//             main.handlebars
+//     */
+//     res.render(__dirname + "/views/layouts/main.hbs", {title : "my title"});//cannot find module hbs❌
+// });
+ 
+// app.listen(3000);
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+////$2
+/*
+Default search the template file (myFIle.handlebars)  in views folder  , when not find take in layouts folder main.handlebars.
+|| default search own given path
+.
+├── app.js
+└── views
+    ├── home.handlebars
+    └── layouts
+        └── main.handlebars
 */
-const express = require('express');
-/* 
-express() - Creates an Express application. The express() function is a top-level function exported by the express module.
+// app.engine('handlebars', exphbs());
+// app.set('view engine', 'handlebars');
+ 
+// app.get('/', function (req, res) {
 
-app.get() - handle get request on specify route
-    app.get("/", (req, res) => {
-        req and res have more functionality
-    })
+//     // res.render(__dirname + "/views/home.handlebars", {title : "in home"});//👍
+//     // res.render("main", {title : "in home"});//❌
+//     // res.render(__dirname + "/views/layouts/myLayout.handlebars", {title : "in myLayout"});//👍
+//     // res.render(__dirname + "/views/layouts/", {title : "in myLayout"});//❌
+// });
+ 
+// app.listen(3000);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+////$3 With config
+
+/*
+├── app.js
+└── views
+    └── layouts
+        └── main.hbs
+    └── index.hbs
+
+ * Another way to use this view engine is to create an instance(s) of ExpressHandlebars, allowing access to the full API:
+        hbs = exphbs.create( { config }  ;
 */
-const app = express();
-const path = require("path");
 
-/////////// static routes
+//config
+// const hbs = exphbs.create({
+//     // defaultLayout: 'main', 
+//     extname : "hbs",    
+// })
+// console.log('hbs', hbs);
+// /*
+// interface ExphbsOptions {
+//     handlebars?: any;
+//     extname?: string;
+//     layoutsDir?: string;
+//     partialsDir?: any;
+//     defaultLayout?: string;
+//     helpers?: any;
+//     compilerOptions?: any;
+// }
+// */
+
+// // // console.log('hbs.engine', hbs.engine);//[Function: bound renderView] AsyncFunction
+// // // console.log('app.engine', app.engine);/[Function: engine]
+
+// // Register `hbs.engine` with the Express app.
+// // console.log('app.engine()', app.engine('handlebars', (path, option) => { ////engines: { '.handlebars': [Function] } }));
+
+// app.engine("hbs", hbs.engine);//register that we  have engine and give some options || register as engine for rendering pages
+// // app.engine('.hbs', exphbs({extname: '.hbs'}));
+
+// app.set('view engine', "hbs");//setting (install) handlebars
+// // app.get("view engine");
+// // console.log('app.get("view engine")', app.get("view engine"));/hbs - give extesnion of engine
+
 // app.get("/", (req, res) => {
+//     ////render - Render the given view name name with options and a callback accepting an error and the rendered template string.
+//     res.render("index", {email : "Tobi"});//not need write all path when give config
+// });
 
-// });//cycling ➰➰ loop - we must close server response
-app.get("/", (req, res) => {
-    res.send();//like res.end()
+// app.listen(3000);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+////$4 With config
+
+
+const PORT = process.env.PORT || 3000;
+
+//1 cofig of engine
+const hbs = exphbs.create({//return object
+    defaultLayout : "main",
+    extname : "hbs"
 });
 
+//2 register in express that we have engine
+app.engine("hbs", hbs.engine);
+//3 set in express our gived cofig engine (with view engined)
+app.set("view engine", "hbs");
 
-/////////// dynamic routes (Path params)
-//ex : /news/12 or /news/5 etc <- dynamic route  ⚠ not only numbers, ex: /news/:hi -> Path params can be word
-// app.get("/news/:id", (req, res) => {
-//     // console.log('req.param', req.params);//{ id: '1' }
-//     res.send(`ID is - ${req.params.id}`)
-// });
-
-////several path params
-app.get("/news/:name/:id", (req, res) => {
-    console.log('req.param', req.params);//{ name: 'korona', id: '1' }
-    res.send(`name is - ${req.params.name} id is - ${req.params.id}`)
+app.get('/', (req, res) => {
+    res.render("index");
+});
+app.get('/about', (req, res) => {
+    //4
+    res.render("about");
 });
 
-app.listen(3000);
+app.listen(PORT);
 
-
-
-/****************************** ******************************/
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/****************************** Show html files in browser  ******************************/
-////#sendFile   
-
-// //express like createServer
-// const PORT = process.env.PORT || 3000;
-// //process.env.PORT is undefined
-
-// // app.get('/', (req, res, next) => {})
-// app.get('/', (req, res) => {
-//     console.log('req', req);
-//     res.sendFile(path.join(__dirname, 'views', "index.html"));//Transfer the file at the given path., Automatically sets the Content-Type response header field.
-// });
-
-// app.get('/about', (req, res) => {
-//     res.sendFile(path.join(__dirname, 'views', "about.html"));
-// });
-
-// app.listen(PORT, () => {
-//     console.log("Server is running...");
-// });
