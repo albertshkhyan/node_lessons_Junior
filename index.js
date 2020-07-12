@@ -1,7 +1,10 @@
-var express = require('express');
-var exphbs = require('express-handlebars');
+const express = require('express');
+const exphbs = require('express-handlebars');
 
-var app = express();
+const app = express();
+const homeRouter = require("./routes/home");
+const coursesRouter = require("./routes/courses");
+const addRouter = require("./routes/add");
 
 const PORT = process.env.PORT || 3000;
 
@@ -27,14 +30,26 @@ app.engine("hbs", hbs.engine);
 //3 set in express our gived cofig engine (with view engined)
 app.set("view engine", "hbs");
 
-app.get('/', (req, res) => {
-    res.render("index", {title : "Home", isHome : true});
-});
-app.get('/courses', (req, res) => {
-    res.render("courses", {title : "Courses", isCourses : true});
-});
-app.get('/add', (req, res) => {
-    res.render("add", {title : "Add Courses", isAdd : true});
-});
+//$1
+// app.get('/', (req, res) => {
+//     res.render("index", { title: "Home", isHome: true });
+// });
+// app.get('/courses', (req, res) => {
+//     res.render("courses", { title: "Courses", isCourses: true });
+// });
+// app.get('/add', (req, res) => {
+//     res.render("add", { title: "Add Courses", isAdd: true });
+// });
+
+// //$2
+// app.use(homeRouter);
+// app.use(coursesRouter);
+// app.use(addRouter);
+
+
+// //$3 more readable
+app.use("/", homeRouter);
+app.use("/courses", coursesRouter);
+app.use("/add", addRouter);
 
 app.listen(PORT);
