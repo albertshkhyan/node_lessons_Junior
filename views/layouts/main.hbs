@@ -1,13 +1,12 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <title>Example App</title>
-</head>
+{{>head}}
+
 <body>
- 
- <h1>{{title}}</h1>
-    {{{body}}}
- 
+    <!-- body - in body wraped content of index.hbs (about.hbs), hbs files in views folder -->
+    <div class="container">
+        {{{body}}}
+    </div>
+
+    {{>foot}}
 </body>
+
 </html>
