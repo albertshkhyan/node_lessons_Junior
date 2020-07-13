@@ -14,6 +14,12 @@ const hbs = exphbs.create({//return object
     extname: "hbs",
 });
 app.use(express.static('public'));
+
+////When do post request req.body is undefined -> 
+app.use(express.urlencoded({extended : true }));//true-> qs lib, parse req body <- working
+////or
+// app.use(express.urlencoded({extended : false }));//true-> qs lib, parse req body <- working
+
 /*
 * app.use([path,] callback [, callback...])
     app.use() - Mounts the specified middleware function or functions at the specified path: the middleware function is executed when the base of the requested path matches path.
@@ -50,6 +56,8 @@ app.set("view engine", "hbs");
 // //$3 more readable
 app.use("/", homeRouter);
 app.use("/courses", coursesRouter);
-app.use("/add", addRouter);
+app
+    .use("/add", addRouter)
+    .use("/courses", addRouter);
 
 app.listen(PORT);
