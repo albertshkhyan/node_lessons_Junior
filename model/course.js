@@ -21,14 +21,14 @@ class Course {
     }
 
     async save() {
-        const course = await Course.getAll();
-        // course.push( JSON.stringify(this.toJson()) )
+        const course = await Course.getAll();//get all content of course.json file
+        course.push( this.toJson() );//push object -> [ {} ] , in this case will not be json
 
         return new Promise((res, rej) => {
             //set file in data/course.json
             fs.writeFile(
                 path.join(__dirname, "../data", "course.json"),
-                JSON.stringify(this.toJson()),
+                JSON.stringify(course),//[{}] -> "[{}]"
                 (err) => {
                     if (err) rej(err);
                     else { res() }
@@ -36,7 +36,7 @@ class Course {
             )
         });
     }
-
+    
     static getAll() {
         return new Promise((res, rej) => {
             fs.readFile(path.join(__dirname, '../data', "course.json"), "utf-8", (err, content) => {
