@@ -1,3 +1,65 @@
 .nav-wrapper {
-    margin: 0 20px;
+  margin: 0 20px;
+}
+
+.course .image-content {
+  width: 30%;
+}
+.image-content > img {
+  width: 100%;
+}
+
+.flexible {
+  display: flex;
+}
+.flexible.horizontal {
+  flex-direction: row;
+}
+.flexible.vertical {
+  flex-direction: column;
+}
+.flexible.vertical-reverse {
+  flex-direction: column-reverse;
+}
+.flexible.jStart {
+  justify-content: flex-start;
+}
+.flexible.jEnd {
+  justify-content: flex-end;
+}
+.flexible.jCenter {
+  justify-content: center;
+}
+.flexible.jAround {
+  justify-content: space-around;
+}
+.flexible.jBetween {
+  justify-content: space-between;
+}
+.flexible.aStart {
+  align-items: flex-start;
+}
+.flexible.aEnd {
+  align-items: flex-end;
+}
+.flexible.aCenter {
+  align-items: center;
+}
+.flexible.wrap {
+  flex-wrap: wrap;
+}
+.flexible.noWrap {
+  flex-wrap: nowrap;
+}
+.flexible.grow {
+  flex-grow: 1;
+}
+.flexible.noGrow {
+  flex-grow: 0;
+}
+.flexible.shrink {
+  flex-shrink: 1;
+}
+.flexible.noShrink {
+  flex-shrink: 0;
 }

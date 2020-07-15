@@ -22,7 +22,7 @@ class Course {
 
     async save() {
         const course = await Course.getAll();//get all content of course.json file
-        course.push( this.toJson() );//push object -> [ {} ] , in this case will not be json
+        course.push(this.toJson());//push object -> [ {} ] , in this case will not be json
 
         return new Promise((res, rej) => {
             //set file in data/course.json
@@ -36,7 +36,7 @@ class Course {
             )
         });
     }
-    
+
     static getAll() {
         return new Promise((res, rej) => {
             fs.readFile(path.join(__dirname, '../data', "course.json"), "utf-8", (err, content) => {
@@ -44,7 +44,12 @@ class Course {
                 else { res(JSON.parse(content)) }//parsing "[]" for can do push in save
             });
         });
+    }
 
+    static async getById(id) {
+        const getAll = await Course.getAll(); 
+        return getAll.find((item) => item.id === id);
     }
 }
+
 module.exports = Course;
