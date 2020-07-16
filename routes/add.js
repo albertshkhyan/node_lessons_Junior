@@ -8,7 +8,6 @@ router.get('/', (req, res) => {
 });
 
 router.post('/', async (req, res) => {
-    console.log('req.body', req.body);//undefined
     /*for fix req.body: we must add middleware which will parse request url to object 
     title=Alik&price=Shkhyan&image=ssd -> { title: 'Alik', price: 'Shkhyan', image: 'ssd' }
     */
@@ -19,6 +18,7 @@ router.post('/', async (req, res) => {
     course.save();
 
     res.redirect('/courses');
+    // res.send("koko")
 })
 
 

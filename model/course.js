@@ -1,7 +1,6 @@
 const uuid = require("uuid");
 const fs = require("fs");
 const path = require("path");
-const { rejects } = require("assert");
 
 class Course {
     constructor(title, price, image) {
@@ -47,9 +46,30 @@ class Course {
     }
 
     static async getById(id) {
-        const getAll = await Course.getAll(); 
+        const getAll = await Course.getAll();
         return getAll.find((item) => item.id === id);
     }
-}
 
+
+    static async update(course) {
+        const courses = await Course.getAll();
+
+        const indexOFChangedCourse = courses.findIndex(c => c.id === course.id);
+        //change only that course (that object) which has changed
+        courses[indexOFChangedCourse] = course;
+
+        return new Promise((res, rej) => {
+            fs.writeFile(
+                path.join(__dirname, "../data", "course.json"),
+                JSON.stringify(courses),//[{}] -> "[{}]"
+                (err) => {
+                    if (err) rej(err);
+                    else { res() }
+                }
+            )
+        });
+
+
+    }
+}
 module.exports = Course;

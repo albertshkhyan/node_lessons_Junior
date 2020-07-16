@@ -2,7 +2,7 @@
   {
     "title": "React",
     "price": "300000",
-    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/React-icon.svg/640px-React-icon.svg.png",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/React-icon.svg/320px-React-icon.svg.png",
     "id": "3186d19f-2e56-4ef6-a278-edf25fd14ba2"
   },
   {
@@ -13,14 +13,26 @@
   },
   {
     "title": "Angular",
-    "price": "130000",
+    "price": "200000",
     "image": "https://angular.io/assets/images/logos/angular/angular.png",
     "id": "1f711f0d-7f81-4e8c-a6a1-9ca8d9cc267f"
   },
   {
     "title": "JavaScript",
-    "price": "300000",
-    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/JavaScript-logo.png/768px-JavaScript-logo.png",
+    "price": "150000",
+    "image": "https://pluspng.com/img-png/logo-javascript-png-html-code-allows-to-embed-javascript-logo-in-your-website-587.png",
     "id": "78e65f54-ba95-4394-acad-dee3b78023d4"
+  },
+  {
+    "title": "NodeJS",
+    "price": "400000",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d9/Node.js_logo.svg/1280px-Node.js_logo.svg.png",
+    "id": "fec96461-545a-46b4-9c3d-3b655fe63969"
+  },
+  {
+    "title": "React Native",
+    "price": "500000",
+    "image": "https://enouvo.com/wp-content/uploads/2016/05/ReactNative-logo.png",
+    "id": "da6b3777-bee5-4ba5-a2f8-8f329dd65006"
   }
 ]
