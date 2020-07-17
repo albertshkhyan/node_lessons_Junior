@@ -8,13 +8,19 @@ const router = Router();
 router.get('/', async (req, res) => {
     const cart = await Cart.fetch();
     res.render('cart', {
-        cart
+        isCart : true,
+        courses : cart.courses,
+        price : cart.price
     });
 });
 
 router.post('/add', async (req, res) => {
-    const course = await Course.getById(req.body);//After click on button we will get id that course which user want to pay.
-    await Cart.add(course);
+    const course = await Course.getById(req.body.id);//After click on button we will get id that course which user want to pay.
+    // req.body//{ id: '1f711f0d-7f81-4e8c-a6a1-9ca8d9cc267f' }
+    //not need to set await
+
+    // await Cart.add(course); ??? add cart.hbs
+    Cart.add(course);
     res.redirect('/cart');//After adding of course in basket we redirect to card
 });
 

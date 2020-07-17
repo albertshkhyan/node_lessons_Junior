@@ -1,5 +1,4 @@
 const {Router} = require("express");
-// console.log('Router', Router);
 /*
 Router [Function] {
   param: [Function: param],
@@ -48,7 +47,6 @@ Router [Function] {
 
 //The top-level express object has a Router() method that creates a new router object.
 const router = Router();//instance of middleware
-// console.log('router', router);
 /*
 route [Function: router] {
   params: {},

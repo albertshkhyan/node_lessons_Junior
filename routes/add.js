@@ -12,7 +12,7 @@ router.post('/', async (req, res) => {
     title=Alik&price=Shkhyan&image=ssd -> { title: 'Alik', price: 'Shkhyan', image: 'ssd' }
     */
     ////after add middleware express.urlencoded
-    // console.log('req.body', req.body);//{ title: 'Alik', price: 'Shkhyan', image: 'ssd' }
+    // req.body//{ title: 'Alik', price: 'Shkhyan', image: 'ssd' }
     const { title, price, image } = req.body;
     const course = await new Course(title, price, image);//create json, if you want to add in DB call save method
     course.save();
