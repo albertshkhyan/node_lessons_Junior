@@ -1,4 +1,4 @@
-const {Router} = require("express");
+const { Router } = require("express");
 const Cart = require("../model/cart");
 const Course = require("../model/course");
 
@@ -8,11 +8,25 @@ const router = Router();
 router.get('/', async (req, res) => {
     const cart = await Cart.fetch();
     res.render('cart', {
-        isCart : true,
-        courses : cart.courses,
-        price : cart.price
+        isCart: true,
+        courses: cart.courses,
+        price: cart.price
     });
 });
+
+router.delete("/remove/:id", async (req, res) => {
+    const cart = await Cart.remove(req.params.id);
+    // console.log('res.json', res.json);//f
+    //$1
+    // res
+    //     .status(200)
+    //     .send(cart);
+    ////use json method
+    //$2
+    res
+    .status(200)
+    .json(cart);
+})
 
 router.post('/add', async (req, res) => {
     const course = await Course.getById(req.body.id);//After click on button we will get id that course which user want to pay.

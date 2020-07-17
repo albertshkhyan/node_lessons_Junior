@@ -18,6 +18,42 @@ class Cart {
         })
     }
 
+    static async remove(id) {
+        console.log('id', id);
+
+        //get data from db (cart)
+        const cart = await Cart.fetch();
+        // console.log('cart 1', cart);
+
+        //get that object on which we clicked, for check count key
+        const idx = cart.courses.findIndex(c => c.id === id);
+        const course = cart.courses[idx];
+
+
+        if (course.count === 1) {
+            //if course tyep is only one, we must delete course object
+            cart.courses = cart.courses.filter((c) => c.id !== id);
+        }
+        else {
+            //id course count type is several
+            // course.count;
+            course.count--;
+        }
+
+        //write data to file
+        return new Promise((res, rej) => {
+            fs.writeFile(
+                p,
+                JSON.stringify(cart),
+                (err) => {
+                    if (err) rej(err);
+                    else res(cart);
+                }
+            );
+        });
+
+    }
+
 
     static async add(course) {
         //in here not come only id, in add pass entire object
