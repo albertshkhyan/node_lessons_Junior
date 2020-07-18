@@ -36,4 +36,8 @@ app
     .use("/add", addRouter)
     .use("/courses", addRouter);
 
+    
 app.listen(PORT);
+const password = "1InRnaA5swLvRluc";
+// const current_ip = "37.252.94.176";
+const url = `mongodb+srv://alik:${password}@cluster0.yvm9m.mongodb.net/<dbname>?retryWrites=true&w=majority`;
