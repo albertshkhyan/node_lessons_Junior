@@ -11,6 +11,9 @@
 .courses-container .card-action {
   font-size: 1rem;
 }
+.price-content strong{
+margin-right: 7px;
+}
 
 .cartItem > a > img{
   width: 25px;

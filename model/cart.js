@@ -39,6 +39,8 @@ class Cart {
             // course.count;
             course.count--;
         }
+        ////forget decrese price when click on delete
+        cart.price = +cart.price - +course.price;
 
         //write data to file
         return new Promise((res, rej) => {

@@ -1,7 +1,7 @@
 <div class="cart">
     <h2>Cart</h2>
+    {{#if courses.length}}
     <table class="highlight">
-        {{#if courses.length}}
         <thead>
             <tr>
                 <th>Name</th>
@@ -26,11 +26,12 @@
 
         </tbody>
     </table>
-    <p>
+    <div class="price-content flexible aCenter">
         <strong>Total price of courses : </strong>
-        <span>{{this.price}}</span>
-    </p>
-
+        <p class="price">
+            <span>{{this.price}}</span>
+        </p>
+    </div>
 
     {{/if}}
 </div>
