@@ -9,8 +9,11 @@ const coursesRouter = require("./routes/courses");
 const addRouter = require("./routes/add");
 const cartRouter = require('./routes/cart');
 
+//mongoose
+const mongoos = require("mongoose");
+// console.log('mongoos', mongoos);//{...}
 
-const PORT = process.env.PORT || 3000;
+
 
 //1 cofig of engine
 const hbs = exphbs.create({//return object
@@ -18,9 +21,8 @@ const hbs = exphbs.create({//return object
     extname: "hbs",
 });
 app.use(express.static('public'));
-
 ////When do post request req.body is undefined -> 
-app.use(express.urlencoded({extended : true }));//true-> qs lib, parse req body <- working
+app.use(express.urlencoded({ extended: true }));//true-> qs lib, parse req body <- working
 
 //2 register in express that we have engine
 app.engine("hbs", hbs.engine);
@@ -36,8 +38,17 @@ app
     .use("/add", addRouter)
     .use("/courses", addRouter);
 
-    
-app.listen(PORT);
-const password = "1InRnaA5swLvRluc";
+
+const start = async () => {
+    const password = "8Ps8wL2HvHkSzODP";
+    const url = `mongodb+srv://alik:${password}@cluster0.mpuj4.mongodb.net/<dbname>?retryWrites=true&w=majority`;
+    mongoos.connect(url, { useNewUrlParser: true, useUnifiedTopology: true });
+    const PORT = process.env.PORT || 3000;
+    app.listen(PORT);
+}
+
+start();
+
+//mongodb+srv://alik:<password>@cluster0.mpuj4.mongodb.net/<dbname>?retryWrites=true&w=majority
 // const current_ip = "37.252.94.176";
-const url = `mongodb+srv://alik:${password}@cluster0.yvm9m.mongodb.net/<dbname>?retryWrites=true&w=majority`;
+
