@@ -10,8 +10,8 @@ const addRouter = require("./routes/add");
 const cartRouter = require('./routes/cart');
 
 //mongoose
-const mongoos = require("mongoose");
-// console.log('mongoos', mongoos);//{...}
+const mongoose = require("mongoose");
+// console.log('mongoose', mongoose);//{...}
 
 
 
@@ -41,10 +41,21 @@ app
 
 const start = async () => {
     const password = "8Ps8wL2HvHkSzODP";
-    const url = `mongodb+srv://alik:${password}@cluster0.mpuj4.mongodb.net/<dbname>?retryWrites=true&w=majority`;
-    mongoos.connect(url, { useNewUrlParser: true, useUnifiedTopology: true });
-    const PORT = process.env.PORT || 3000;
-    app.listen(PORT);
+    const url = `mongodb+srv://alik:${password}@cluster0.mpuj4.mongodb.net/shop?retryWrites=true&w=majority`;
+
+    //connect return promise for this we must wait, first connect mongoose to MongoDB, use await
+    //but can work reject, for handle error we will use try catch
+    try {
+        await mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true });
+        //check connected or not
+        console.log('Mongoose Connecting to MongoDB - ', mongoose.connection.readyState);//1 === connected
+        const PORT = process.env.PORT || 3000;
+        app.listen(PORT);
+    } catch (err) {
+        //if connect call reject
+        console.log('err', err);
+    }
+
 }
 
 start();

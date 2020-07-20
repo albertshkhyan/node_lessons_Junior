@@ -8,16 +8,27 @@ router.get('/', (req, res) => {
 });
 
 router.post('/', async (req, res) => {
-    /*for fix req.body: we must add middleware which will parse request url to object 
-    title=Alik&price=Shkhyan&image=ssd -> { title: 'Alik', price: 'Shkhyan', image: 'ssd' }
-    */
-    ////after add middleware express.urlencoded
-    // req.body//{ title: 'Alik', price: 'Shkhyan', image: 'ssd' }
-    const { title, price, image } = req.body;
-    const course = await new Course(title, price, image);//create json, if you want to add in DB call save method
-    course.save();
 
-    res.redirect('/courses');
+    const { title, price, image } = req.body;
+    //csutom model
+    // const course = await new Course(title, price, image);//create json, if you want to add in DB call save method
+
+    //model of mongoose
+    const course = await new Course({
+        //values
+        title,
+        price,
+        image
+    });//create json, if you want to add in DB call save method
+
+    try {
+        await course.save();
+        res.redirect('/courses');
+    } catch (err) {
+        //for reject of save
+        console.log('err', err);
+    }
+
     // res.send("koko")
 })
 
