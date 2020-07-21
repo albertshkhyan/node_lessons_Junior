@@ -8,6 +8,7 @@ router.get('/', (req, res) => {
 });
 
 router.post('/', async (req, res) => {
+    // console.log('req.body addPost', req.body);
 
     const { title, price, image } = req.body;
     //csutom model

@@ -19,8 +19,6 @@ class Cart {
     }
 
     static async remove(id) {
-        console.log('id', id);
-
         //get data from db (cart)
         const cart = await Cart.fetch();
         // console.log('cart 1', cart);

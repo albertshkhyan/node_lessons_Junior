@@ -5,29 +5,37 @@ const Course = require("../model/course");
 const router = Router();
 
 
+router.post("/remove", async (req, res) => {
+    try {
+        // console.log('req.body.id remove course', req.body.id);
+        //remove is depreacated
+        // await Course.remove({ id: req.body.id });//Removes documents from the collection. -> all document that match condition
+        //not depreacated
+        await Course.findByIdAndDelete(req.body.id);
+        res.redirect("/courses");
+    }
+    catch (err) {
+        console.log('err', err);
+    }
+});
+
 router.get('/', async (req, res) => {
     //can't pass course of find method
     let course = await Course.find();
-    // console.log('course', course);
     //convert to object
-    console.log("get courses /");
     course = course.map(({ title, _id: id, price, image }) => ({ title, id, price, image }));
-    // console.log('course', course);
     res.render("courses", { title: "Courses", isCourses: true, course });
-
 });
 
 router.get("/:id/edit", async (req, res) => {
-    console.log("get edit courses /:id/edit");
-
     if (!req.query.allow) {
         return res.redirect('/');
     }
     let course = await Course.findById(req.params.id);
     const { title, _id: id, price, image } = course;
+    console.log('id', id);
     //after space, letter not show in edit page
     course = { title, id, price, image };
-    console.log('title', title);
     res.render("courseEdit", {
         title: `${course.title}`,
         course
@@ -36,13 +44,8 @@ router.get("/:id/edit", async (req, res) => {
 
 
 router.post("/edit", async (req, res) => {
-    // console.log("koko 1");
     try {
-        const {id} = req.body; 
-        console.log('req.body 1', req.body);
-        // delete req.body.id;
-        console.log('req.body 2', req.body);
-
+        const { id } = req.body;
         await Course.findByIdAndUpdate(id, req.body);
         res.redirect('/courses');
 

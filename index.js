@@ -47,7 +47,6 @@ const start = async () => {
     try {
         await mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true });
         //check connected or not
-        console.log('Mongoose Connecting to MongoDB - ', mongoose.connection.readyState);//1 === connected
         const PORT = process.env.PORT || 3000;
         app.listen(PORT);
     } catch (err) {
