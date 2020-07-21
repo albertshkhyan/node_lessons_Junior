@@ -11,7 +11,6 @@ const cartRouter = require('./routes/cart');
 
 //mongoose
 const mongoose = require("mongoose");
-// console.log('mongoose', mongoose);//{...}
 
 
 
