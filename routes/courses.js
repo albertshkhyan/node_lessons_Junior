@@ -7,10 +7,6 @@ const router = Router();
 
 router.post("/remove", async (req, res) => {
     try {
-        // console.log('req.body.id remove course', req.body.id);
-        //remove is depreacated
-        // await Course.remove({ id: req.body.id });//Removes documents from the collection. -> all document that match condition
-        //not depreacated
         await Course.findByIdAndDelete(req.body.id);
         res.redirect("/courses");
     }
@@ -20,6 +16,7 @@ router.post("/remove", async (req, res) => {
 });
 
 router.get('/', async (req, res) => {
+    // console.log("/courses req.user", req.user);
     //can't pass course of find method
     let course = await Course.find();
     //convert to object

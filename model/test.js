@@ -2,7 +2,6 @@ const { Schema, model, connect, connection } = require("mongoose");
 const mongoose = require("mongoose");
 
 (async () => {
-    console.log("hi");
     try {
         const url = `mongodb+srv://alik:8Ps8wL2HvHkSzODP@cluster0.mpuj4.mongodb.net/shop?retryWrites=true&w=majority`;
         await connect(url, {

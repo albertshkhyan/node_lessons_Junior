@@ -18,6 +18,21 @@ const hbs = exphbs.create({//return object
     extname: "hbs",
 });
 
+//models
+const User = require("./model/user");
+
+//custom midleware - find  own specify id of then put in reqest object that user
+app.use(async (req, res, next) => {
+    try {
+        const user = await User.findById("5f1adf513e01303678e8ce3c");
+        req.user = user;//request through all middlewares, any router can take this user from own request object
+        next();
+    }
+    catch (err) {
+        console.log('err', err);
+    }
+});
+
 app.use(express.static(__dirname + '/public'));//Create a new middleware function to serve files from within a given root directory
 
 app.use(express.urlencoded({ extended: true }));//true-> qs lib, parse req body <- working
@@ -46,6 +61,21 @@ app
             useUnifiedTopology: true,
             useFindAndModify: false
         });//connect on mongoDB
+        // console.log();
+        //check have in db some user or not, if not have some user we will create user
+        const candidate = await User.findOne();
+        // console.log('candidate', candidate);
+        if (!candidate) {
+            const user = new User({
+                name: "Alik",
+                email: "alikshkhyan@gmail.com",
+                cart: {
+                    items: []
+                }
+            });
+            await user.save();
+        }
+
         const PORT = process.env.PORT || 3000;
         app.listen(PORT);
     } catch (err) {

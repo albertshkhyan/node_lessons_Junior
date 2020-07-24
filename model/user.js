@@ -4,11 +4,11 @@ const { Schema, model } = require("mongoose");
 const user = new Schema({
     name: {
         type: String,
-        required: truea
+        required: true
     },
     email: {
         type: String,
-        required: truea
+        required: true
     },
     //Every user have own cart
     cart: {
@@ -21,7 +21,7 @@ const user = new Schema({
                     default: 1
                 },
                 courseId : {
-                    type : Schema.type.ObjectId,
+                    type : Schema.Types.ObjectId,
                     required: true,
                     ref: "Course"
                 }
