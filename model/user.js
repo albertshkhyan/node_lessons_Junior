@@ -20,8 +20,8 @@ const user = new Schema({
                     required: true,
                     default: 1
                 },
-                courseId : {
-                    type : Schema.Types.ObjectId,
+                courseId: {
+                    type: Schema.Types.ObjectId,
                     required: true,
                     ref: "Course"
                 }
@@ -30,8 +30,47 @@ const user = new Schema({
     }
 });
 
+//Because in User Schema we already implement the cart, we willn't create cart model, we just extend functionality of User Schema
+
+// Instance methods - add custom method 
+user.methods.addCourseInCart = function (course) {
+    console.log('course', course);
+    /*
+    course {
+      _id: 5f1aed4394be660cc8a6af42,
+      title: 'Angular 8',
+      price: '400000',
+      image: 'https://angular.io/assets/images/logos/angular/angular.png',
+      userId: 5f1adf513e01303678e8ce3c,
+      __v: 0
+    }
+    */
+
+    //get cart field from user model
+    const items = [...this.cart.items];
+
+    
+    const idx = items.findIndex((c) => c.courseId.toString() === course._id.toString());
+
+    if (idx >= 0) {
+        items[idx].count += 1
+    }
+    else {
+        items.push({
+            count: 1,
+            courseId: course._id
+        });
+    }
+
+    this.cart = { items };
+
+    return this.save();
+}
 
 module.exports = model("User", user, 'users');//compile user schema to model, Returns another Model instance.
+
+
+
 
 
 
@@ -123,15 +162,15 @@ const users = new User({//4
     email : "john@mail.ru",
     items: [{
         count: 3
-    }]  
+    }]
 });
 
 users.save(function(err,result){ //5
-    if (err){ 
-        console.log(err); 
-    } 
-    else{ 
-        console.log(result) 
-    } 
-}) 
+    if (err){
+        console.log(err);
+    }
+    else{
+        console.log(result)
+    }
+})
 */

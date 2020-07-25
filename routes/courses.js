@@ -1,9 +1,7 @@
 const { Router } = require("express");
 const Course = require("../model/course");
 
-
 const router = Router();
-
 
 router.post("/remove", async (req, res) => {
     try {
@@ -16,7 +14,6 @@ router.post("/remove", async (req, res) => {
 });
 
 router.get('/', async (req, res) => {
-    // console.log("/courses req.user", req.user);
     //can't pass course of find method
     let course = await Course.find();
     //convert to object

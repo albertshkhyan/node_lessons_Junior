@@ -9,15 +9,6 @@ router.get('/', (req, res) => {
 
 router.post('/', async (req, res) => {
     try {
-        //What we can do after liked the models 
-        // console.log('req.user._id', req.user._id);
-        // const crs = await Course
-        // .findOne()
-        // // .populate("userId");//with populate we can access fileds of User, because Course model have reference to User Model -> get all fields
-        // ////specify filed -> select concrete field
-        // .populate("userId", "name")//{ _id: 5f1adf513e01303678e8ce3c, name: 'Alik' }
-        // .select("price");//select from Course model, show only onw specified fileds)
-
         const { title, price, image } = req.body;
         //model of mongoose
         const course = await new Course({

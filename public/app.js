@@ -23,7 +23,8 @@ if ($cart) {
             const id = event.target.dataset.id;
             fetch(`cart/remove/${id}`, {
                 method: "delete"
-            }).then((res) => res.json())
+            })
+                .then((res) => res.json())
                 .then(res => {
                     if (res.courses.length) {
                         ////after mapping on array, then add, like this more simple

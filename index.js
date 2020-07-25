@@ -23,8 +23,9 @@ const User = require("./model/user");
 
 //custom midleware - find  own specify id of then put in reqest object that user
 app.use(async (req, res, next) => {
+    //active users
     try {
-        const user = await User.findById("5f1adf513e01303678e8ce3c");
+        const user = await User.findById("5f1b5dcfe89c8224688e92d3");
         req.user = user;//request through all middlewares, any router can take this user from own request object
         next();
     }
