@@ -34,24 +34,9 @@ const user = new Schema({
 
 // Instance methods - add custom method 
 user.methods.addCourseInCart = function (course) {
-    console.log('course', course);
-    /*
-    course {
-      _id: 5f1aed4394be660cc8a6af42,
-      title: 'Angular 8',
-      price: '400000',
-      image: 'https://angular.io/assets/images/logos/angular/angular.png',
-      userId: 5f1adf513e01303678e8ce3c,
-      __v: 0
-    }
-    */
-
     //get cart field from user model
     const items = [...this.cart.items];
-
-    
     const idx = items.findIndex((c) => c.courseId.toString() === course._id.toString());
-
     if (idx >= 0) {
         items[idx].count += 1
     }
