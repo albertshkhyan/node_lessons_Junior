@@ -11,7 +11,9 @@ const mapCartItems = (course) => {
     return course.map((c) => {
         return ({
             // ...c.courseId._doc,  count: c.count//not recomented
-            ...c.courseId.toJSON(), count: c.count//✅
+            ...c.courseId.toJSON(),
+            id: c.courseId.id,//mongoose auto understand _id
+            count: c.count
         })
     });
 }
@@ -24,7 +26,8 @@ router.get('/', async (req, res) => {
         const user = await req.user
             .populate("cart.items.courseId")
             .execPopulate();//without execPopulate can't get content of Course model
-
+            
+            // console.log('mapCartItems(user.cart.items)', mapCartItems(user.cart.items));
         res.render("cart", {
             title: "Cart",
             isCart: true,
@@ -38,16 +41,14 @@ router.get('/', async (req, res) => {
 });
 
 router.delete("/remove/:id", async (req, res) => {
-    console.log('delete ++++++++++ req.params.id', req.params.id);
-
     try {
         const user = await req.user.removeItemsFromCart(req.params.id);
         const getCoursesByid = await req.user.populate('cart.items.courseId').execPopulate();
-
+        console.log('getCoursesByid', getCoursesByid);
+        
         const cart = {
             courses: mapCartItems(getCoursesByid.cart.items),
             price: mapTotalPriceOfItems(getCoursesByid.cart.items)
-
         }
         res
             .status(200)

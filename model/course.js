@@ -1,4 +1,4 @@
-const {Schema, model} = require("mongoose");
+const { Schema, model } = require("mongoose");
 
 
 //create model 
@@ -8,11 +8,11 @@ const {Schema, model} = require("mongoose");
 const course = new Schema({
     //fileds
     title: {
-        type : String,
+        type: String,
         required: true
     },
     price: {
-        type : String,
+        type: String,
         required: true
     },
     image: String,
@@ -22,6 +22,21 @@ const course = new Schema({
     }
 
 });
+
+////Adds an instance method to documents constructed from Models compiled from this schema.
+/////when will work toClient ???
+course.method("toClient", function () {
+    console.log("hello koko");
+    console.log(this);
+    console.log('this', this);
+    const course = this.toObject();
+
+    course.id = course._id;
+    delete course._id;
+
+    return course;
+});
+
 //with model we provide, for ex: save method
 module.exports = model("Course", course);//schema compile to model -> instance of clas Document
 
