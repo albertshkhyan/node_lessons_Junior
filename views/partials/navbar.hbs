@@ -20,7 +20,7 @@
             <li><a href="/add">Add Courses</a></li>
             {{/if}}
 
-            {{#if isCard}}
+            {{#if isCart}}
             <li class="active cartItem">
                 <a href="/cart" class="flexible  aCenter jCenter">
                     <img src="https://image.flaticon.com/icons/png/512/263/263142.png" alt="cart">
@@ -35,6 +35,14 @@
                 </a>
             </li>
             {{/if}}
+
+            {{#if isOrder}}
+            <li class="active"><a href="/orders">Order</a></li>
+            {{else}}
+            <li><a href="/orders">Order</a></li>
+            {{/if}}
+
+
         </ul>
     </div>
 </nav>
