@@ -44,7 +44,6 @@ router.delete("/remove/:id", async (req, res) => {
     try {
         const user = await req.user.removeItemsFromCart(req.params.id);
         const getCoursesByid = await req.user.populate('cart.items.courseId').execPopulate();
-        console.log('getCoursesByid', getCoursesByid);
         
         const cart = {
             courses: mapCartItems(getCoursesByid.cart.items),

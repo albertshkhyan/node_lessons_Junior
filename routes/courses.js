@@ -27,7 +27,6 @@ router.get("/:id/edit", async (req, res) => {
     }
     let course = await Course.findById(req.params.id);
     const { title, _id: id, price, image } = course;
-    console.log('id', id);
     //after space, letter not show in edit page
     course = { title, id, price, image };
     res.render("courseEdit", {

@@ -1,7 +1,7 @@
 const { Schema, model } = require("mongoose");
 
 // define Schema
-const user = new Schema({
+const userSchema = new Schema({
     name: {
         type: String,
         required: true
@@ -10,7 +10,7 @@ const user = new Schema({
         type: String,
         required: true
     },
-    //Every user have own cart
+    //Every userSchema have own cart
     cart: {
         items: [
             //elements of items array must have count key
@@ -33,8 +33,8 @@ const user = new Schema({
 //Because in User Schema we already implement the cart, we willn't create cart model, we just extend functionality of User Schema
 
 // Instance methods - add custom method 
-user.methods.addCourseInCart = function (course) {
-    //get cart field from user model
+userSchema.methods.addCourseInCart = function (course) {
+    //get cart field from userSchema model
     const items = [...this.cart.items];
     const idx = items.findIndex((c) => c.courseId.toString() === course._id.toString());
     if (idx >= 0) {
@@ -52,7 +52,7 @@ user.methods.addCourseInCart = function (course) {
     return this.save();
 }
 
-user.methods.removeItemsFromCart = function (id) {
+userSchema.methods.removeItemsFromCart = function (id) {
     let items = [...this.cart.items];
 
     const userCart = items.find(c => c.courseId.toString() === id.toString());
@@ -69,6 +69,6 @@ user.methods.removeItemsFromCart = function (id) {
     return this.save();
 }
 
-module.exports = model("User", user, 'users');//compile user schema to model, Returns another Model instance.
+module.exports = model("User", userSchema, 'users');//compile userSchema schema to model, Returns another Model instance.
 
 

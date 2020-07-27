@@ -4,10 +4,13 @@ const exphbs = require('express-handlebars');
 const app = express();
 
 //routers
-const homeRouter = require("./routes/home");
-const coursesRouter = require("./routes/courses");
-const addRouter = require("./routes/add");
-const cartRouter = require('./routes/cart');
+const homeRoutes = require("./routes/home");
+const coursesRoutes = require("./routes/courses");
+const addRoutes = require("./routes/add");
+const cartRoutes = require('./routes/cart');
+const orderRoutes = require("./routes/order");
+
+
 //mongoose
 const mongoose = require("mongoose");
 
@@ -43,14 +46,18 @@ app.engine("hbs", hbs.engine);
 //3 set in express our gived cofig engine (with view engined)
 app.set("view engine", "hbs");
 
-// //$3 more readable
-app.use('/cart', cartRouter);
 
-app.use("/", homeRouter);
-app.use("/courses", coursesRouter);
-app
-    .use("/add", addRouter)
-    .use("/courses", addRouter);
+//// works that route which first match, queue of app.use is important
+app.use('/cart', cartRoutes);
+
+app.use("/", homeRoutes);
+app.use("/courses", coursesRoutes);
+
+app//work when go add page, and add new course
+    .use("/add", addRoutes)//show when enter on add course link, get add page
+    .use("/courses", addRoutes);//works when from /add route redirect on /course
+app.use("/orders", orderRoutes);
+
 
 // Database Connection 
 

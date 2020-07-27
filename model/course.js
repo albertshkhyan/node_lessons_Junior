@@ -5,7 +5,7 @@ const { Schema, model } = require("mongoose");
 /**
  * Everything in Mongoose starts with a Schema. Each schema maps to a MongoDB collection and defines the shape of the documents within that collection.
  */
-const course = new Schema({
+const courseSchema = new Schema({
     //fileds
     title: {
         type: String,
@@ -25,20 +25,18 @@ const course = new Schema({
 
 ////Adds an instance method to documents constructed from Models compiled from this schema.
 /////when will work toClient ???
-course.method("toClient", function () {
-    console.log("hello koko");
-    console.log(this);
-    console.log('this', this);
-    const course = this.toObject();
+courseSchema.method("toClient", function () {
+    console.log("hello toClient function");
+    const courseSchema = this.toObject();
 
-    course.id = course._id;
-    delete course._id;
+    courseSchema.id = courseSchema._id;
+    delete courseSchema._id;
 
-    return course;
+    return courseSchema;
 });
 
 //with model we provide, for ex: save method
-module.exports = model("Course", course);//schema compile to model -> instance of clas Document
+module.exports = model("Course", courseSchema);//schema compile to model -> instance of clas Document
 
 
 
@@ -83,14 +81,14 @@ module.exports = model("Course", course);//schema compile to model -> instance o
 //     }
 
 //     async save() {
-//         const course = await Course.getAll();//get all content of course.json file
-//         course.push(this.toJson());//push object -> [ {} ] , in this case will not be json
+//         const courseSchema = await Course.getAll();//get all content of courseSchema.json file
+//         courseSchema.push(this.toJson());//push object -> [ {} ] , in this case will not be json
 
 //         return new Promise((res, rej) => {
-//             //set file in data/course.json
+//             //set file in data/courseSchema.json
 //             fs.writeFile(
-//                 path.join(__dirname, "../data", "course.json"),
-//                 JSON.stringify(course),//[{}] -> "[{}]"
+//                 path.join(__dirname, "../data", "courseSchema.json"),
+//                 JSON.stringify(courseSchema),//[{}] -> "[{}]"
 //                 (err) => {
 //                     if (err) rej(err);
 //                     else { res() }
@@ -101,7 +99,7 @@ module.exports = model("Course", course);//schema compile to model -> instance o
 
 //     static getAll() {
 //         return new Promise((res, rej) => {
-//             fs.readFile(path.join(__dirname, '../data', "course.json"), "utf-8", (err, content) => {
+//             fs.readFile(path.join(__dirname, '../data', "courseSchema.json"), "utf-8", (err, content) => {
 //                 if (err) rej(err);
 //                 else { res(JSON.parse(content)) }//parsing "[]" for can do push in save
 //             });
@@ -114,16 +112,16 @@ module.exports = model("Course", course);//schema compile to model -> instance o
 //     }
 
 
-//     static async update(course) {
+//     static async update(courseSchema) {
 //         const courses = await Course.getAll();
 
-//         const indexOFChangedCourse = courses.findIndex(c => c.id === course.id);
-//         //change only that course (that object) which has changed
-//         courses[indexOFChangedCourse] = course;
+//         const indexOFChangedCourse = courses.findIndex(c => c.id === courseSchema.id);
+//         //change only that courseSchema (that object) which has changed
+//         courses[indexOFChangedCourse] = courseSchema;
 
 //         return new Promise((res, rej) => {
 //             fs.writeFile(
-//                 path.join(__dirname, "../data", "course.json"),
+//                 path.join(__dirname, "../data", "courseSchema.json"),
 //                 JSON.stringify(courses),//[{}] -> "[{}]"
 //                 (err) => {
 //                     if (err) rej(err);

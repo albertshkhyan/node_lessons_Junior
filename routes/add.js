@@ -4,10 +4,12 @@ const router = Router();
 const Course = require("../model/course");
 
 router.get('/', (req, res) => {
+    //when click on add link
     res.render("add", { title: "Add Courses", isAdd: true });
 });
 
 router.post('/', async (req, res) => {
+    //when add new link
     try {
         const { title, price, image } = req.body;
         //model of mongoose

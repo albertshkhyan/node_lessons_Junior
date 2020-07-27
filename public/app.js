@@ -21,13 +21,11 @@ if ($cart) {
     $cart.addEventListener('click', event => {
         if (event.target.classList.contains('js-remove')) {
             const id = event.target.dataset.id;
-            console.log('id', id);
             fetch(`cart/remove/${id}`, {
                 method: "delete"
             })
                 .then((res) => res.json())
                 .then(res => {
-                    console.log('res', res);
                     if (res.courses.length) {
                         ////after mapping on array, then add, like this more simple
                         const content = res.courses.map(c => {
