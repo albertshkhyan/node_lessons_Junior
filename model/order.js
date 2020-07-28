@@ -1,18 +1,18 @@
-const { Schema, model } = require('mongoose');
+const {Schema, model} = require('mongoose');
 
 
 const orderSchema = new Schema({
     courses: [
-        {
-            course: {
-                type: Object,
-                required: true
-            },
-            count: {
-                type: Number,
-                required: true
+            {
+                course: {
+                    type: Object,//array of courses
+                    required: true
+                },
+                count: {
+                    type: Number,
+                    required: true
+                }
             }
-        }
     ],
     user: {
         name: String,

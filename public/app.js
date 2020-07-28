@@ -53,3 +53,22 @@ if ($cart) {
     })
 }
 
+
+const dateFormat = (date) => {
+    return new Intl.DateTimeFormat('ru-RU', {
+        month: 'long',
+        day: '2-digit',
+        year: 'numeric',
+        hour: "2-digit",
+        second: "2-digit",
+        minute: "2-digit",
+    }).format(new Date(date));
+}
+// console.log('dateFormat()', dateFormat(Date.UTC(2019, 03, 25, 3, 0, 0)));
+
+const $date = document.querySelectorAll(".date");
+// console.log('$date', $date);
+
+$date.forEach(d => {
+    d.textContent = dateFormat(d.textContent);
+});
