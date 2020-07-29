@@ -27,7 +27,6 @@ router.get('/', async (req, res) => {
             .populate("cart.items.courseId")
             .execPopulate();//without execPopulate can't get content of Course model
             
-            // console.log('mapCartItems(user.cart.items)', mapCartItems(user.cart.items));
         res.render("cart", {
             title: "Cart",
             isCart: true,

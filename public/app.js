@@ -72,3 +72,6 @@ const $date = document.querySelectorAll(".date");
 $date.forEach(d => {
     d.textContent = dateFormat(d.textContent);
 });
+
+
+var instance = M.Tabs.init(document.querySelector(".tabs"));

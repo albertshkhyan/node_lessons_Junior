@@ -9,6 +9,8 @@ const coursesRoutes = require("./routes/courses");
 const addRoutes = require("./routes/add");
 const cartRoutes = require('./routes/cart');
 const orderRoutes = require("./routes/order");
+const loginRoutes = require('./routes/auth');
+
 
 
 //mongoose
@@ -57,6 +59,8 @@ app//work when go add page, and add new course
     .use("/add", addRoutes)//show when enter on add course link, get add page
     .use("/courses", addRoutes);//works when from /add route redirect on /course
 app.use("/orders", orderRoutes);
+app.use("/auth", loginRoutes);
+
 
 
 // Database Connection 
@@ -69,7 +73,7 @@ app.use("/orders", orderRoutes);
             useUnifiedTopology: true,
             useFindAndModify: false
         });//connect on mongoDB
-        // console.log();
+        
         //check have in db some user or not, if not have some user we will create user
         const candidate = await User.findOne();
         // console.log('candidate', candidate);

@@ -56,7 +56,6 @@ userSchema.methods.removeItemsFromCart = function (id) {
     let items = [...this.cart.items];
 
     const userCart = items.find(c => c.courseId.toString() === id.toString());
-    // console.log('userCar***********t', userCart);
 
     if (userCart.count === 1) {
         items = items.filter(c => c.courseId.toString() !== id.toString())

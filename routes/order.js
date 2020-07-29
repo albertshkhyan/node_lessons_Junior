@@ -13,37 +13,7 @@ router.get("/", async (req, res) => {
         // console.log('orders', orders);
         // console.log(orders[0].courses.__proto__);//without populate 👌
         // console.log( orders[0].user.userId.__proto__);//😨😨 againt info about db, after populate always must transform data to object
-        /**
-         *orders [
-                {
-                    user: { name: 'Alik', userId: [Object] },
-                    _id: 5f1f4a56e940e911a4888f59,
-                    courses: [ [Object], [Object] ],
-                    data: 2020-07-27T21:42:46.664Z,
-                    __v: 0
-                }
-            ]
 
-            *o {
-                user: {
-                    name: 'Alik',
-                    userId: {
-                    cart: [Object],
-                    _id: 5f1b5dcfe89c8224688e92d3,
-                    name: 'Alik',
-                    email: 'alikshkhyan@gmail.com',
-                    __v: 0
-                    }
-                },
-                _id: 5f1f4a56e940e911a4888f59,
-                courses: [
-                    { _id: 5f1f4a56e940e911a4888f5a, course: [Object], count: 2 },
-                    { _id: 5f1f4a56e940e911a4888f5b, course: [Object], count: 1 }
-                ],
-                data: 2020-07-27T21:42:46.664Z,
-                __v: 0
-                }
-         */
         orders = orders.map(o => {
             // console.log('o.courses.__proto__', o.courses.__proto__);
             // console.log('o.courses', o.courses);
@@ -56,7 +26,6 @@ router.get("/", async (req, res) => {
                 }, 0)
             });
         });
-        console.log('orders', orders);
         // console.log('orders.user.userId', orders[0].user.userId);
 
         res.render("order", {
