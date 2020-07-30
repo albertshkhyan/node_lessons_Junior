@@ -5,6 +5,8 @@ const {Router} = require("express");
 const router = Router();//instance of middleware
 
 router.get('/', (req, res) => {
+    // console.log('req.session home - ', req.session);//in content of session object ther is isAuthenticated: true
+
     res.render("index", { title: "Home", isHome: true });
 });
 

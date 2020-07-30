@@ -11,10 +11,13 @@ const cartRoutes = require('./routes/cart');
 const orderRoutes = require("./routes/order");
 const loginRoutes = require('./routes/auth');
 
-
-
-//mongoose
+//not core packages
 const mongoose = require("mongoose");
+
+//middlewares
+const session = require("express-session");
+const varMiddleware = require("./middlewares/variable");
+
 
 
 //1 cofig of engine
@@ -42,6 +45,17 @@ app.use(async (req, res, next) => {
 app.use(express.static(__dirname + '/public'));//Create a new middleware function to serve files from within a given root directory
 
 app.use(express.urlencoded({ extended: true }));//true-> qs lib, parse req body <- working
+
+// Use the session middleware, for that, can use session object
+app.use(session({
+    secret: 'this is my secret code :)',
+    resave: false,//NOTE -  resave: this may have to be enabled for session stores that don't support the "touch" command. 
+    saveUninitialized: true,//NOTE - when saveUninitialized is false, the (still empty, because unmodified) session object will not be stored in the session store.
+}));
+//custom middleware, in correct place we must switch this middleware
+app.use(varMiddleware);
+
+
 
 //2 register in express that we have engine
 app.engine("hbs", hbs.engine);
@@ -73,7 +87,7 @@ app.use("/auth", loginRoutes);
             useUnifiedTopology: true,
             useFindAndModify: false
         });//connect on mongoDB
-        
+
         //check have in db some user or not, if not have some user we will create user
         const candidate = await User.findOne();
         // console.log('candidate', candidate);

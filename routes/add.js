@@ -1,9 +1,10 @@
 const { Router } = require("express");
 const router = Router();
-
 const Course = require("../model/course");
+// console.log('isAuth', isAuth());//Cannot read property 'locals' of undefined
 
 router.get('/', (req, res) => {
+    console.log('isAuth', isAuth);
     //when click on add link
     res.render("add", { title: "Add Courses", isAdd: true });
 });
