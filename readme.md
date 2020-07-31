@@ -3,14 +3,19 @@ noteId: "365ee650d27f11ea8c1aaf3b0c729447"
 tags: []
 
 ---
+Plan
+⚫Install connect-mongodb-session
+⚫After express-session require,import  function whch return mongoDB class,
+⚫Give option that class.
+⚫Then our session store in db.
+⚫Then loged in system , that see in db session. ????
+⚫When we do logout session must be clear in db.
+⚫Have problem – hide two button edit and pay.
+
+NOTE withour database when do reload of page redirect on login page, but when session store in db, its doesn't happen.
+
 
 # Plan
-⚫ Remove that  middleware with  imitation active user.
-⚫ When we must get actiove user ? - Temporarily we will wait  while get some user (active user).
-    ◾ In session also add out  active user (user data and isAuthenticated)
-
-⚠ In next we will save session I database.
-
 
 # exmplain
 save(callback) - Saves a session back to the store, replacing the contents of the store with the contents in memory.
