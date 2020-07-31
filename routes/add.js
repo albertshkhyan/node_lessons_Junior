@@ -2,13 +2,14 @@ const { Router } = require("express");
 const router = Router();
 const Course = require("../model/course");
 // console.log('isAuth', isAuth());//Cannot read property 'locals' of undefined
+const ensureAuth = require("../middlewares/ensureAuth");
 
-router.get('/', (req, res) => {
+router.get('/', ensureAuth, (req, res) => {
     //when click on add link
     res.render("add", { title: "Add Courses", isAdd: true });
 });
 
-router.post('/', async (req, res) => {
+router.post('/', ensureAuth, async (req, res) => {
     //when add new link
     try {
         const { title, price, image } = req.body;

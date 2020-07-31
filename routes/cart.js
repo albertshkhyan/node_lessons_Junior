@@ -3,6 +3,7 @@ const Course = require("../model/course");
 
 //Work with cat with User model, because in User implement cart field
 const User = require("../model/user");
+const ensureAuth = require("../middlewares/ensureAuth");
 
 
 const router = Router();
@@ -21,7 +22,7 @@ const mapTotalPriceOfItems = (course) => {
     return course.reduce((total, { courseId, count }) => total += courseId.price * count, 0);
 }
 
-router.get('/', async (req, res) => {
+router.get('/', ensureAuth, async (req, res) => {
     try {
         const user = await req.user
             .populate("cart.items.courseId")
@@ -39,7 +40,7 @@ router.get('/', async (req, res) => {
     }
 });
 
-router.delete("/remove/:id", async (req, res) => {
+router.delete("/remove/:id", ensureAuth,  async (req, res) => {
     try {
         const user = await req.user.removeItemsFromCart(req.params.id);
         const getCoursesByid = await req.user.populate('cart.items.courseId').execPopulate();
@@ -56,7 +57,7 @@ router.delete("/remove/:id", async (req, res) => {
     }
 });
 
-router.post('/add', async (req, res) => {
+router.post('/add', ensureAuth, async (req, res) => {
     try {
         const course = await Course.findById(req.body.id);
         await req.user.addCourseInCart(course);

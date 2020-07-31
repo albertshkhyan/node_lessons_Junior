@@ -2,9 +2,9 @@ const { Router } = require('express');
 const router = Router();
 const Order = require('../model/order');
 const order = require('../model/order');
-// console.log('Order', Order);//Model { Order }
+const ensureAuth = require("../middlewares/ensureAuth");
 
-router.get("/", async (req, res) => {
+router.get("/", ensureAuth,  async (req, res) => {
     try {
         //find that users which id equal id of active user, we must do populate because we have only name of user, we want all data of user (for ex: email)
         //# Find documents by nested ID -> with find
@@ -37,7 +37,7 @@ router.get("/", async (req, res) => {
     }
 });
 
-router.post("/", async (req, res) => {
+router.post("/", ensureAuth,  async (req, res) => {
     //in users collection we have cart which contain our order courses -> get -> cart: { items: [ [Object], [Object] ] },
     try {
         const user = await req.user.populate("cart.items.courseId").execPopulate();
