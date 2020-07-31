@@ -18,6 +18,8 @@ const mongoose = require("mongoose");
 const session = require("express-session");
 const MongoDBStore = require("connect-mongodb-session")(session);
 const varMiddleware = require("./middlewares/variable");
+const userMiddleware = require("./middlewares/user");
+
 
 //With MongoDBStore class we crete instance that have config of session in db
 const MONGODB_URI = `mongodb+srv://alik:8Ps8wL2HvHkSzODP@cluster0.mpuj4.mongodb.net/shop?retryWrites=true&w=majority`;
@@ -49,6 +51,8 @@ app.use(session({
 }));
 //custom middleware, in correct place we must switch this middleware
 app.use(varMiddleware);
+
+app.use(userMiddleware);//NOTE -  app.use automatic call inner function and give 3 arguments req, res, next
 
 
 

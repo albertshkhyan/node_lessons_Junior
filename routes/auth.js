@@ -21,7 +21,7 @@ router.post("/login", async (req, res) => {
         }
     */
     try {
-        const user = await User.findById("5f1b5dcfe89c8224688e92d3");
+        const user = await User.findById("5f1b5dcfe89c8224688e92d3");//NOTE - my id ALik-> always we we do login it give me
         //NOTE -  If  we add in session some data, they data may not have time to fill.
         req.session.isAuthenticated = true;
         //res.session.user = user;//FUCK 😨😨😨😨
