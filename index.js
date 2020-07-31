@@ -29,18 +29,18 @@ const hbs = exphbs.create({//return object
 //models
 const User = require("./model/user");
 
-//custom midleware - find  own specify id of then put in reqest object that user
-app.use(async (req, res, next) => {
-    //active users
-    try {
-        const user = await User.findById("5f1b5dcfe89c8224688e92d3");
-        req.user = user;//request through all middlewares, any router can take this user from own request object
-        next();
-    }
-    catch (err) {
-        console.log('err', err);
-    }
-});
+//⚫ Remove that  middleware with  imitation active user.
+// app.use(async (req, res, next) => {
+//     //active users
+//     try {
+//         const user = await User.findById("5f1b5dcfe89c8224688e92d3");
+//         req.user = user;//request through all middlewares, any router can take this user from own request object
+//         next();
+//     }
+//     catch (err) {
+//         console.log('err', err);
+//     }
+// });
 
 app.use(express.static(__dirname + '/public'));//Create a new middleware function to serve files from within a given root directory
 
@@ -48,9 +48,9 @@ app.use(express.urlencoded({ extended: true }));//true-> qs lib, parse req body 
 
 // Use the session middleware, for that, can use session object
 app.use(session({
-    secret: 'this is my secret code :)',
+    secret: 'top secret!',//This is a required option for the secret to sign the session ID cookie. It can be a string or an array of multiple string secrets.
     resave: false,//NOTE -  resave: this may have to be enabled for session stores that don't support the "touch" command. 
-    saveUninitialized: true,//NOTE - when saveUninitialized is false, the (still empty, because unmodified) session object will not be stored in the session store.
+    saveUninitialized: false,//NOTE - when saveUninitialized is false, the (still empty, because unmodified) session object will not be stored in the session store. 
 }));
 //custom middleware, in correct place we must switch this middleware
 app.use(varMiddleware);
@@ -88,19 +88,18 @@ app.use("/auth", loginRoutes);
             useFindAndModify: false
         });//connect on mongoDB
 
-        //check have in db some user or not, if not have some user we will create user
-        const candidate = await User.findOne();
-        // console.log('candidate', candidate);
-        if (!candidate) {
-            const user = new User({
-                name: "Alik",
-                email: "alikshkhyan@gmail.com",
-                cart: {
-                    items: []
-                }
-            });
-            await user.save();
-        }
+        //Temporary create some user
+        // const candidate = await User.findOne();
+        // if (!candidate) {
+        //     const user = new User({
+        //         name: "Alik",
+        //         email: "alikshkhyan@gmail.com",
+        //         cart: {
+        //             items: []
+        //         }
+        //     });
+        //     await user.save();
+        // }
 
         const PORT = process.env.PORT || 8080;
         app.listen(PORT);
