@@ -49,9 +49,9 @@ app.use(session({
     saveUninitialized: false,//- when saveUninitialized is false, the (still empty, because unmodified) session object will not be stored in the session store. 
     store
 }));
+
 //custom middleware, in correct place we must switch this middleware
 app.use(varMiddleware);
-
 app.use(userMiddleware);//NOTE -  app.use automatic call inner function and give 3 arguments req, res, next
 
 

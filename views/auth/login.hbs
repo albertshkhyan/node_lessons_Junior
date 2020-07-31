@@ -26,22 +26,28 @@
     </div>
     <div id="register" class="col s6 offset-l3">
       <h2 class="center">Sign Up</h2>
-     <form action="/auth/login" method="POST">
+     <form action="/auth/register" method="POST">
+         <div class="row">
+          <div class="input-field col s12">
+            <input name="name" id="name" type="text" class="validate">
+            <label class="active" for="name">Name</label>
+          </div>
+        </div>
         <div class="row">
           <div class="input-field col s12">
-            <input name="remail" id="remail" type="text" class="validate">
+            <input name="email" id="remail" type="text" class="validate">
             <label class="active" for="remail">Email</label>
           </div>
         </div>
         <div class="row">
           <div class="input-field col s12">
-            <input name="r_password" id="rpassword" type="password" class="validate">
+            <input name="password" id="rpassword" type="password" class="validate">
             <label class="active" for="rpassword">Password</label>
           </div>
         </div>
         <div class="row">
           <div class="input-field col s12">
-            <input name="r_conf_passw" id="conf_passw" type="password" class="validate">
+            <input name="repeat" id="conf_passw" type="password" class="validate">
             <label class="active" for="conf_passw">Confirm password</label>
           </div>
         </div>

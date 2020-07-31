@@ -7,7 +7,7 @@ module.exports = async (req, res, next) => {
     //req.user - is current active user 1`
     // console.log('userrrrrrrrrrrr req.session', req.session);
     if (!req.session.user) {
-        res.redirect("/auth/login");
+        // res.redirect("/auth/login");//give bug when logout
         return next();
     }
     //if in session we have user, we will transform that user to model user
