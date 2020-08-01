@@ -17,7 +17,8 @@
                 <td>{{this.count}}</td>
                 <td>
                     <button class="wbtn-floating btn-small waves-effect waves-light red js-remove"
-                        data-id={{this.id}}>delete</button>
+                        data-csrf="{{@root.csrf}}"
+                        data-id="{{this.id}}">delete</button>
                 </td>
 
 
@@ -34,6 +35,7 @@
     </div>
 
     <form action="/orders" method="POST">
+        <input type="text" name="_csrf" value="{{csrf}}" hidden>
         <button class="btn orange" type="submit">confirm order</button>
     </form>
 

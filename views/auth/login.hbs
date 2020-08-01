@@ -7,7 +7,7 @@
       </ul>
     </div>
     <div id="login" class="col s6 offset-l3">
-      <h2 class="center">{{title}}</h2>
+      <h2 class="center">Login</h2>
       <form action="/auth/login" method="POST">
         <div class="row">
           <div class="input-field col s12">
@@ -22,6 +22,7 @@
           </div>
         </div>
         <button class="btn waves-effect waves-light" type="submit">Submit</button>
+        <input type="text" name="_csrf" value="{{csrf}}" hidden>
       </form>
     </div>
     <div id="register" class="col s6 offset-l3">
@@ -52,6 +53,7 @@
           </div>
         </div>
         <button class="btn waves-effect waves-light" type="submit">Submit</button>
+        <input type="text" name="_csrf" value="{{csrf}}" hidden>
       </form>
 
     </div>

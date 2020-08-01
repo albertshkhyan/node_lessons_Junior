@@ -21,8 +21,14 @@ if ($cart) {
     $cart.addEventListener('click', event => {
         if (event.target.classList.contains('js-remove')) {
             const id = event.target.dataset.id;
+            console.log('event.target', event.target);
+            // console.log('event.target.dataset', event.target.dataset);
+            const csrf  = event.target.dataset.csrf;
             fetch(`cart/remove/${id}`, {
-                method: "delete"
+                method: "delete",
+                headers: {
+                    "X-CSRF-TOKEN": csrf
+                }
             })
                 .then((res) => res.json())
                 .then(res => {
@@ -35,7 +41,8 @@ if ($cart) {
                                 <td>${c.count}</td>
                                 <td>
                                     <button class="wbtn-floating btn-small waves-effect waves-light red js-remove"
-                                        data-id=${c.id}>delete</button>
+                                        data-csrf="${csrf}"
+                                        data-id="${c.id}">delete</button>
                                 </td>
                             </tr>
                             `
