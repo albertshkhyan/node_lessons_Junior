@@ -1,6 +1,9 @@
 const express = require('express');
 const app = express();
 
+const keys = require("./keys");
+
+
 const exphbs = require('express-handlebars');
 const csurf = require("csurf");//this lib for protection forms, give one function
 
@@ -24,9 +27,8 @@ const flash = require("connect-flash");//With the flash middleware in place, all
 
 
 //With MongoDBStore class we crete instance that have config of session in db
-const MONGODB_URI = `mongodb+srv://alik:8Ps8wL2HvHkSzODP@cluster0.mpuj4.mongodb.net/shop?retryWrites=true&w=majority`;
 const store = new MongoDBStore({
-    uri: MONGODB_URI,
+    uri: keys.MONGODB_URI,
     collection: 'sessions'//like table name
 });
 
@@ -42,7 +44,7 @@ app.use(express.urlencoded({ extended: true }));//true-> qs lib, parse req body 
 
 // Use the session middleware, for that, can use session object
 app.use(session({
-    secret: 'top secret!',
+    secret: keys.SESSION_SECRET,// secret parameter allows express-session to use it to encrypt the sessionId
     resave: false,
     saveUninitialized: false,
     store
@@ -71,7 +73,7 @@ app.use("/auth", loginRoutes);
 // Database Connection 
 (async () => {
     try {
-        await mongoose.connect(MONGODB_URI, {
+        await mongoose.connect(keys.MONGODB_URI, {
             useNewUrlParser: true,//By default, mongoose.connect() will print out the below warning:
             useUnifiedTopology: true,
             useFindAndModify: false
