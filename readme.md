@@ -3,21 +3,21 @@ noteId: "365ee650d27f11ea8c1aaf3b0c729447"
 tags: []
 
 ---
+
+CSRF or XSRF - fake request
+* attack with forms
+* CSRF (Cross-Site Request Forgery, также XSRF) – опаснейшая атака, которая приводит к тому, что хакер может выполнить на неподготовленном сайте массу различных действий от имени других, зарегистрированных посетителей.
+* Cross-site request forgery, also known as one-click attack or session riding and abbreviated as CSRF.
+That mena hacker can get our session.
+
 Plan
-⚫Implement register post routes
-    ◾ User registration and email verification || user registration with email
-    ◾ Have candidate  
-    ◾ By default when user registration he will have empty cart
+⚫Install csurf package
+⚫Refactor all forms (return function as middleware).
+⚫Use csurf middleware
+⚫Fix error “Invalid csrf token”
+⚫Handle all forms.
+    Add in variable middleware new variable for views
 
 
 
-
-# Plan
-
-# exmplain
-save(callback) - Saves a session back to the store, replacing the contents of the store with the contents in memory.
-Сохраните сеанс обратно в хранилище, заменив содержимое хранилища содержимым в памяти (хотя хранилище может сделать что-то другое - обратитесь к документации хранилища для точного поведения).
-
-*  FOR WHAT connect-monogdb-session - without database when do reload of page redirect on login page, but when session store in db, its doesn't happen.
-* resave: this may have to be enabled for session stores that don't support the "touch" command.
-* when saveUninitialized is false, the (still empty, because unmodified) session object will not be stored in the session store. 
+ForbiddenError: invalid csrf token - this error give when we try do post request.

@@ -26,7 +26,7 @@ const courseSchema = new Schema({
 ////Adds an instance method to documents constructed from Models compiled from this schema.
 /////when will work toClient ???
 courseSchema.method("toClient", function () {
-    console.log("hello toClient function");
+console.log("hello toClient function");
     const courseSchema = this.toObject();
 
     courseSchema.id = courseSchema._id;

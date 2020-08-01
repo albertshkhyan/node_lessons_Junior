@@ -1,5 +1,7 @@
 const express = require('express');
 const exphbs = require('express-handlebars');
+const csurf = require("csurf");//this lib for protection forms 
+// console.log('csurf', csurf);//give one function
 
 
 const app = express();
@@ -49,6 +51,8 @@ app.use(session({
     saveUninitialized: false,//- when saveUninitialized is false, the (still empty, because unmodified) session object will not be stored in the session store. 
     store
 }));
+app.use(csurf());
+
 
 //custom middleware, in correct place we must switch this middleware
 app.use(varMiddleware);
