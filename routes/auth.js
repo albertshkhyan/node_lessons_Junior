@@ -4,7 +4,6 @@ const session = require("express-session");
 
 const router = Router();
 
-
 router.get("/login", (req, res) => {
     res.render("auth/login", {
         isLogin: true,//use this key in navbasr.hbs -> this varible transfer on main.hbs
@@ -14,14 +13,27 @@ router.get("/login", (req, res) => {
 //
 router.post("/login", async (req, res) => {
     try {
-        const user = await User.findById("5f1b5dcfe89c8224688e92d3");
-        req.session.user = user;
-        req.session.isAuthenticated = true;//authentication - who are you
-        //res.session.user = user;//FUCK 😨😨😨😨
-        req.session.save((err) => {//save session in database
-            if (err) throw  err;
-            res.redirect('/');
-        });
+        const { email, password } = req.body;
+        const candidate = await User.findOne({ email });
+
+        if (candidate) {
+            //compare passwords
+            if (password === candidate.password) {
+                req.session.isAuthenticated = true;
+                req.session.user = candidate;
+                req.session.save((err) => {//save session in database
+                    if (err) throw err;
+                    res.redirect('/');
+                });
+            }
+            else {
+                res.redirect('login#login');
+            }
+        }
+        else {
+            //if not find candidate in DB (email not match)
+            res.redirect('login#register');//if want to autmat add prefix not set / in first /login
+        }
     } catch (err) {
         console.log('err', err);
     }
@@ -32,7 +44,7 @@ router.get("/logout", (req, res) => {
         console.log('err', err);
         //remove session collectin in db
         if (err) { throw err };
-        res.redirect('/auth/login');
+        res.redirect('login');//if we add / - undersatnd as root
     })
 });
 
@@ -61,13 +73,13 @@ router.post("/register", async (req, res) => {
                 cart: { items: [] }
             });
             await user.save();
-            res.redirect('/auth/login#login');
+            res.redirect('login#login');
         } else {
             //⚠ if a user was found, that means the user's email matches the entered email
             // res.status(409).json({
             //     error: "A user with that email has already registered. Please use a different email.."
             // });
-            res.redirect('/auth/login#register');
+            res.redirect('login#register');
         }
 
     } catch (err) {
