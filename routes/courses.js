@@ -23,7 +23,7 @@ router.get('/', async (req, res) => {
     res.render("courses", { title: "Courses", isCourses: true, course });
 });
 
-router.get("/:id/edit", ensureAuth, async (req, res) => {
+router.get("/:id/edit", ensureAuth, async (req, res) => {    
     if (!req.query.allow) {
         return res.redirect('/');
     }

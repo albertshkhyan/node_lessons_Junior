@@ -4,6 +4,10 @@ const session = require("express-session");
 
 const router = Router();
 
+const bcrypt = require("bcryptjs");
+// console.log('bcrypt', bcrypt);
+
+
 router.get("/login", (req, res) => {
     res.render("auth/login", {
         isLogin: true,//use this key in navbasr.hbs -> this varible transfer on main.hbs
@@ -18,7 +22,9 @@ router.post("/login", async (req, res) => {
 
         if (candidate) {
             //compare passwords
-            if (password === candidate.password) {
+            const areSame = await bcrypt.compare(password, candidate.password);//compare enetered password to db password
+            // console.log('areSame', areSame);
+            if (areSame) {
                 req.session.isAuthenticated = true;
                 req.session.user = candidate;
                 req.session.save((err) => {//save session in database
@@ -53,15 +59,16 @@ router.post("/register", async (req, res) => {
     try {
         //# email must be unque
         const { email, name, password, repeat } = req.body;
-        // console.log('req.body', req.body);
-        /**
-         * req.body {
-            name: 'Alik',
-            email: 'alikshkhyan@gmail.com',
-            password: '123',
-            repeat: '123'
-            }
-         */
+
+        // Store hash in your password DB.
+        const hash = await bcrypt.hash(password, 10);//Asynchronously generates a hash for the given string.
+       /**
+        *  "salt round" - controls how long it takes to compute a single BCrypt hash.
+         Default hash round is 10.
+        */
+
+        // console.log('hash', hash);// $2a$10$6dppmOUfbTt1sJeBdsRo5.d0RG2iR/zDQHiEDdeuKozIVXO.Wy0w.
+
         //# check if user with email already exists?
         const candidate = await User.findOne({ "email": email });//if not find email return null
         // console.log('candidate check email ---------', candidate);//null || obj
@@ -69,7 +76,7 @@ router.post("/register", async (req, res) => {
             const user = new User({
                 name,
                 email,
-                password,
+                password: hash,
                 cart: { items: [] }
             });
             await user.save();
