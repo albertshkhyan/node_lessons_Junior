@@ -11,11 +11,24 @@
 .courses-container .card-action {
   font-size: 1rem;
 }
-.price-content strong{
-margin-right: 7px;
+.price-content strong {
+  margin-right: 7px;
 }
 
-.cartItem > a > img{
+.alert-danger {
+  color: #721c24;
+  background-color: #f8d7da;
+  border-color: #f5c6cb;
+}
+.alert {
+  position: relative;
+  padding: 0.75rem 1.25rem;
+  margin-bottom: 1rem;
+  border: 1px solid transparent;
+  border-radius: 0.25rem;
+}
+
+.cartItem > a > img {
   width: 25px;
   margin-right: 5px;
 }

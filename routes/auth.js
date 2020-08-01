@@ -11,7 +11,9 @@ const bcrypt = require("bcryptjs");
 router.get("/login", (req, res) => {
     res.render("auth/login", {
         isLogin: true,//use this key in navbasr.hbs -> this varible transfer on main.hbs
-        title: "Login"
+        title: "Login",
+        loginError: req.flash('loginError'),
+        registerError: req.flash("registerError")
     });
 });
 //
@@ -33,12 +35,14 @@ router.post("/login", async (req, res) => {
                 });
             }
             else {
+                req.flash("loginError", "Incorrect password");
                 res.redirect('login#login');
             }
         }
         else {
             //if not find candidate in DB (email not match)
-            res.redirect('login#register');//if want to autmat add prefix not set / in first /login
+            req.flash("loginError", "No such user exists");
+            res.redirect('login#login');//if want to autmat add prefix not set / in first /login
         }
     } catch (err) {
         console.log('err', err);
@@ -86,6 +90,7 @@ router.post("/register", async (req, res) => {
             // res.status(409).json({
             //     error: "A user with that email has already registered. Please use a different email.."
             // });
+            req.flash("registerError", "Email address already exists");
             res.redirect('login#register');
         }
 

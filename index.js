@@ -1,12 +1,10 @@
 const express = require('express');
-const exphbs = require('express-handlebars');
-const csurf = require("csurf");//this lib for protection forms 
-// console.log('csurf', csurf);//give one function
-
-
 const app = express();
 
-//routers
+const exphbs = require('express-handlebars');
+const csurf = require("csurf");//this lib for protection forms, give one function
+
+//#routers
 const homeRoutes = require("./routes/home");
 const coursesRoutes = require("./routes/courses");
 const addRoutes = require("./routes/add");
@@ -14,13 +12,15 @@ const cartRoutes = require('./routes/cart');
 const orderRoutes = require("./routes/order");
 const loginRoutes = require('./routes/auth');
 
-//not core packages
-const mongoose = require("mongoose");
+const mongoose = require("mongoose");//lib of js ODM allows you to define strongly typed data schemas.
 
+//#midlewares
 const session = require("express-session");
 const MongoDBStore = require("connect-mongodb-session")(session);
+
 const varMiddleware = require("./middlewares/variable");
 const userMiddleware = require("./middlewares/user");
+const flash = require("connect-flash");//With the flash middleware in place, all requests will have a req.flash() function that can be used for flash messages.
 
 
 //With MongoDBStore class we crete instance that have config of session in db
@@ -36,52 +36,39 @@ const hbs = exphbs.create({//return object
     extname: "hbs",
 });
 
-//models
-const User = require("./model/user");
-
-
 app.use(express.static(__dirname + '/public'));//Create a new middleware function to serve files from within a given root directory
 
 app.use(express.urlencoded({ extended: true }));//true-> qs lib, parse req body <- working
 
 // Use the session middleware, for that, can use session object
 app.use(session({
-    secret: 'top secret!',//This is a required option for the secret to sign the session ID cookie. It can be a string or an array of multiple string secrets.
-    resave: false,//-  resave: this may have to be enabled for session stores that don't support the "touch" command. 
-    saveUninitialized: false,//- when saveUninitialized is false, the (still empty, because unmodified) session object will not be stored in the session store. 
+    secret: 'top secret!',
+    resave: false,
+    saveUninitialized: false,
     store
 }));
-app.use(csurf());
-
+app.use(flash());
+app.use(csurf());//protect all forms
 
 //custom middleware, in correct place we must switch this middleware
 app.use(varMiddleware);
-app.use(userMiddleware);//NOTE -  app.use automatic call inner function and give 3 arguments req, res, next
+app.use(userMiddleware);// app.use automatic call inner function and give 3 arguments req, res, next
 
 
+app.engine("hbs", hbs.engine);//2 register in express that we have engine
+app.set("view engine", "hbs");//3 set in express our gived cofig engine (with view engined)
 
-//2 register in express that we have engine
-app.engine("hbs", hbs.engine);
-//3 set in express our gived cofig engine (with view engined)
-app.set("view engine", "hbs");
-
-
-//// works that route which first match, queue of app.use is important
+// works that route which first match, queue of app.use is important
 app.use('/cart', cartRoutes);
-
 app.use("/", homeRoutes);
 app.use("/courses", coursesRoutes);
-
 app//work when go add page, and add new course
     .use("/add", addRoutes)//show when enter on add course link, get add page
     .use("/courses", addRoutes);//works when from /add route redirect on /course
 app.use("/orders", orderRoutes);
 app.use("/auth", loginRoutes);
 
-
-
 // Database Connection 
-
 (async () => {
     try {
         await mongoose.connect(MONGODB_URI, {
@@ -89,20 +76,6 @@ app.use("/auth", loginRoutes);
             useUnifiedTopology: true,
             useFindAndModify: false
         });//connect on mongoDB
-
-        //Temporary create some user
-        // const candidate = await User.findOne();
-        // if (!candidate) {
-        //     const user = new User({
-        //         name: "Alik",
-        //         email: "alikshkhyan@gmail.com",
-        //         cart: {
-        //             items: []
-        //         }
-        //     });
-        //     await user.save();
-        // }
-
         const PORT = process.env.PORT || 8080;
         app.listen(PORT);
     } catch (err) {
