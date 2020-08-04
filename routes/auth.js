@@ -1,6 +1,27 @@
 const { Router } = require("express");
 const User = require('../model/user');
 const session = require("express-session");
+const nodemailer = require("nodemailer");
+const sendgrid = require("nodemailer-sendgrid-transport");//for connect SendGrid API
+const keys = require("../keys");
+const regMail = require("../emails/registration");
+
+
+/*
+nodemailer {
+    createTransport: [Function],
+    createTestAccount: [Function],
+    getTestMessageUrl: [Function]
+  }
+  sendgrid [Function]
+*/
+
+//create transporter object, for can use sendMail
+const transporter = nodemailer.createTransport(sendgrid({
+    auth: {api_key: keys.SENDGRID_KEY}
+}));//transport argument - as argument pass email delivery service which will have options (object config)
+// console.log('transporter', transporter);//return Mail {..., sendMail}
+
 
 const router = Router();
 
@@ -85,6 +106,7 @@ router.post("/register", async (req, res) => {
             });
             await user.save();
             res.redirect('login#login');
+            await transporter.sendMail(regMail(email))//sendMail(mailOptions)
         } else {
             //⚠ if a user was found, that means the user's email matches the entered email
             // res.status(409).json({
