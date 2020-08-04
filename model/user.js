@@ -14,6 +14,8 @@ const userSchema = new Schema({
         type: String,
         required: true
     },
+    resetToken: String,
+    resetTokenExp: Date,
     //Every userSchema have own cart
     cart: {
         items: [

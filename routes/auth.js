@@ -4,7 +4,11 @@ const session = require("express-session");
 const nodemailer = require("nodemailer");
 const sendgrid = require("nodemailer-sendgrid-transport");//for connect SendGrid API
 const keys = require("../keys");
+
 const regMail = require("../emails/registration");
+const resetMail = require("../emails/resetMail");
+const crypto = require("crypto");
+
 
 
 /*
@@ -18,7 +22,7 @@ nodemailer {
 
 //create transporter object, for can use sendMail
 const transporter = nodemailer.createTransport(sendgrid({
-    auth: {api_key: keys.SENDGRID_KEY}
+    auth: { api_key: keys.SENDGRID_KEY }
 }));//transport argument - as argument pass email delivery service which will have options (object config)
 // console.log('transporter', transporter);//return Mail {..., sendMail}
 
@@ -37,6 +41,7 @@ router.get("/login", (req, res) => {
         registerError: req.flash("registerError")
     });
 });
+
 //
 router.post("/login", async (req, res) => {
     try {
@@ -79,7 +84,6 @@ router.get("/logout", (req, res) => {
     })
 });
 
-
 router.post("/register", async (req, res) => {
     try {
         //# email must be unque
@@ -87,10 +91,10 @@ router.post("/register", async (req, res) => {
 
         // Store hash in your password DB.
         const hash = await bcrypt.hash(password, 10);//Asynchronously generates a hash for the given string.
-       /**
-        *  "salt round" - controls how long it takes to compute a single BCrypt hash.
-         Default hash round is 10.
-        */
+        /**
+         *  "salt round" - controls how long it takes to compute a single BCrypt hash.
+          Default hash round is 10.
+         */
 
         // console.log('hash', hash);// $2a$10$6dppmOUfbTt1sJeBdsRo5.d0RG2iR/zDQHiEDdeuKozIVXO.Wy0w.
 
@@ -120,6 +124,48 @@ router.post("/register", async (req, res) => {
         console.log('err', err);
 
     }
-})
+});
+
+router.get("/reset", (req, res) => {
+    res.render("auth/reset", {
+        title: "Forget your password ?",
+        error: req.flash("error")
+    });
+});
+
+router.post("/reset", (req, res) => {
+    //req.body
+    //#generate token for more protection (custom token)
+    crypto.randomBytes(32, async (err, buf) => {
+        try {
+            const { email } = req.body;
+            if (err) {
+                res.redirect('/auth/reset');
+                return req.flesh('error', 'Sory we can\'t generate token, try letter.')
+            }
+            const token = buf.toString('hex');
+
+            //#find user which want to reset password, and give token
+            const candidate = await User.findOne({ email: email });
+
+            if (candidate) {
+                candidate.resetToken = token;
+                candidate.resetTokenExp = Date.now();//for example this token willn't valid after on hour
+                await candidate.save();
+                res.redirect('/auth/login');
+                await transporter.sendMail(resetMail(email, token));//give token for more protect route, in background mode send mail
+            }
+            else {
+                req.flash("error", "Sorry no such user");
+                res.redirect("/auth/reset");
+            }
+
+        }
+        catch (err) {
+            console.log('err', err);
+        }
+    });
+});
+
 
 module.exports = router;
