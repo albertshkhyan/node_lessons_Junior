@@ -54,7 +54,7 @@ app.use(csurf());//protect all forms
 
 //custom middleware, in correct place we must switch this middleware
 app.use(varMiddleware);
-app.use(userMiddleware);// app.use automatic call inner function and give 3 arguments req, res, next
+app.use(userMiddleware);//current user (active, online user)
 
 
 app.engine("hbs", hbs.engine);//2 register in express that we have engine

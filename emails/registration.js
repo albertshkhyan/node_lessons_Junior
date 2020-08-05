@@ -1,7 +1,6 @@
 const keys = require("../keys");
 
 module.exports = (email) => {
-    console.log('email', email);
     return {
         from: keys.FROM_MAIL,
         to: email,

@@ -134,14 +134,13 @@ router.get("/reset", (req, res) => {
 });
 
 router.post("/reset", (req, res) => {
-    //req.body
     //#generate token for more protection (custom token)
     crypto.randomBytes(32, async (err, buf) => {
         try {
             const { email } = req.body;
             if (err) {
                 res.redirect('/auth/reset');
-                return req.flesh('error', 'Sory we can\'t generate token, try letter.')
+                return req.flash('error', 'Sory we can\'t generate token, try letter.')
             }
             const token = buf.toString('hex');
 
@@ -150,7 +149,7 @@ router.post("/reset", (req, res) => {
 
             if (candidate) {
                 candidate.resetToken = token;
-                candidate.resetTokenExp = Date.now();//for example this token willn't valid after on hour
+                candidate.resetTokenExp = Date.now() + 60 * 60 * 1000//for example this token willn't valid after on hour -> Date.now() * 60 * 60 * 1000;
                 await candidate.save();
                 res.redirect('/auth/login');
                 await transporter.sendMail(resetMail(email, token));//give token for more protect route, in background mode send mail
@@ -166,6 +165,70 @@ router.post("/reset", (req, res) => {
         }
     });
 });
+
+router.get("/password/:token", async (req, res) => {
+    //NOTE - For first we must check actouly we have tokne or not 
+    // console.log('GET - /password/:token');
+    const { token } = req.params;
+    if (!token) {
+        res.redirect("/auth/login");
+    }
+    try {
+        const user = await User.findOne({
+            resetToken: token,
+            resetTokenExp: { $gt: Date.now() }//value of resetTokenExp must be gretter then  Date.now
+            
+        });
+        // console.log('get("/password/:token" --------- user', user);
+        // console.log('user', user);
+        if (user) {
+            res.render('auth/password', {
+                title: "Recover access",
+                userID: user._id.toString(),
+                token: user.resetToken,
+                error: req.flash('error')
+            });
+        }
+        else {
+            //if token is expire , we redirect on login page
+            // res.redirect('/auth/reset');//❌
+            res.redirect('/auth/login');
+            req.flash("error", "Sorry, your token expired !");
+        }
+    } catch (err) {
+        console.log('err', err);
+    }
+});
+
+
+
+router.post("/password", async (req, res) => {
+    try {
+        // console.log('POST - /password');
+        const { token, userID, password } = req.body;
+        const candidate = await User.findOne({
+            resetToken: token,
+            resetTokenExp: { $gt: Date.now() },//we must check token expire time when do post request
+            _id: userID,
+        });
+        const hashPassword = await bcrypt.hash(password, 10);
+
+        if (candidate) {
+            // candidate.password = password;//invorrect passowrd
+            candidate.password = hashPassword;
+            candidate.resetToken = undefined;
+            candidate.resetTokenExp = undefined;
+            await candidate.save();
+            res.redirect("/auth/login");
+        } else {
+            req.flash("error", "Your token is expired !");
+            res.redirect("/auth/reset");
+        }
+    } catch (err) {
+        console.log('err', err);
+    }
+
+})
 
 
 module.exports = router;

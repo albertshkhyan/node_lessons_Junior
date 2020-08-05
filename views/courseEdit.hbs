@@ -28,6 +28,8 @@
 
 
 <form action="/courses/remove" method="POST">
-    <input name="id"  type="text"  value="{{course.id}}" hidden>
+    <input name="id" type="text" value="{{course.id}}" hidden>
+    <input type="text" name="_csrf" value="{{csrf}}" hidden>
+
     <button type="submit" class="btn red">Remove course</button>
 </form>

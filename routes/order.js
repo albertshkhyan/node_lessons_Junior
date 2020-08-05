@@ -20,7 +20,6 @@ router.get("/", ensureAuth, async (req, res) => {
                 }, 0)
             });
         });
-        // console.log('orders.user.userId', orders[0].user.userId);
 
         res.render("order", {
             isOrder: true,//for navigation menu, active item
