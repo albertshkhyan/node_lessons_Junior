@@ -9,6 +9,9 @@ const regMail = require("../emails/registration");
 const resetMail = require("../emails/resetMail");
 const crypto = require("crypto");
 
+const { validationResult } = require("express-validator");
+const { registerValidator } = require("../utils/validators");
+// console.log('registerValidator', registerValidator);//validator.js functions
 
 
 /*
@@ -77,18 +80,29 @@ router.post("/login", async (req, res) => {
 
 router.get("/logout", (req, res) => {
     req.session.destroy((err) => {
-        console.log('err', err);
         //remove session collectin in db
         if (err) { throw err };
         res.redirect('login');//if we add / - undersatnd as root
     })
 });
 
-router.post("/register", async (req, res) => {
+//NOTE - 
+router.post("/register", registerValidator, async (req, res) => {
+    // console.log('req -----------------------------', req.error());
+    const errors = validationResult(req);
+    // console.log('errors', errors);//Result { formatter: [Function: formatter], errors: [] }
+
+    console.log('errors.isEmpty()', errors.isEmpty(), !errors.isEmpty());
+    if (!errors.isEmpty()) {
+        console.log(errors.array());//errors.array() - [ { value: '', msg: 'Invalid value', param: 'email', location: 'body' } ]
+        req.flash('registerError', errors.array()[0].msg);
+        // return res.redirect('/auth/login#register');
+        return res.status(422).redirect("/auth/login#register");
+    }
+
     try {
         //# email must be unque
         const { email, name, password, repeat } = req.body;
-
         // Store hash in your password DB.
         const hash = await bcrypt.hash(password, 10);//Asynchronously generates a hash for the given string.
         /**
@@ -101,6 +115,7 @@ router.post("/register", async (req, res) => {
         //# check if user with email already exists?
         const candidate = await User.findOne({ "email": email });//if not find email return null
         // console.log('candidate check email ---------', candidate);//null || obj
+
         if (!candidate) {
             const user = new User({
                 name,
@@ -167,7 +182,7 @@ router.post("/reset", (req, res) => {
 });
 
 router.get("/password/:token", async (req, res) => {
-    //NOTE - For first we must check actouly we have tokne or not 
+    // For first we must check actouly we have tokne or not 
     // console.log('GET - /password/:token');
     const { token } = req.params;
     if (!token) {
@@ -177,7 +192,7 @@ router.get("/password/:token", async (req, res) => {
         const user = await User.findOne({
             resetToken: token,
             resetTokenExp: { $gt: Date.now() }//value of resetTokenExp must be gretter then  Date.now
-            
+
         });
         // console.log('get("/password/:token" --------- user', user);
         // console.log('user', user);
