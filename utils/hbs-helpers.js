@@ -2,8 +2,6 @@
 module.exports = {
     ifeq(a, b, options) {//if equalt
         //options {fn, inverse, data:{} } 
-        // console.log('b', b);
-        // console.log('a', a);
         // console.log('options', options);
         if(a === b) {
             // console.log('this', this);

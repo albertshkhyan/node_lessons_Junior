@@ -24,7 +24,7 @@ const MongoDBStore = require("connect-mongodb-session")(session);
 const varMiddleware = require("./middlewares/variable");
 const userMiddleware = require("./middlewares/user");
 const flash = require("connect-flash");//With the flash middleware in place, all requests will have a req.flash() function that can be used for flash messages.
-
+const hbsHelpers = require("./utils/hbs-helpers");
 
 //With MongoDBStore class we crete instance that have config of session in db
 const store = new MongoDBStore({
@@ -36,6 +36,7 @@ const store = new MongoDBStore({
 const hbs = exphbs.create({//return object
     defaultLayout: "main",
     extname: "hbs",
+    helpers: hbsHelpers
 });
 
 app.use(express.static(__dirname + '/public'));//Create a new middleware function to serve files from within a given root directory

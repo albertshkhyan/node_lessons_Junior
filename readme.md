@@ -4,18 +4,10 @@ tags: []
 
 ---
 
-# Plan
+# Plan - Refactoring in access rights, Рефакторинг прав доступа
 
-* npm install nodemailer and nodemailer-sendgrid-transport
-* Work with auth route
-
-After registration of user send mail, that user. Successfully registration :)
-
-
-# nodemailer 
-def: designed (предназначенный) for sending emails.
-
-# nodemailer-sendgrid-transport
-def: access to API of sendgrid | that makes it possible to send through SendGrid's Web API!. | provide SMTP
-
+    * visual protect - user can edit course of another user
+    * route protect
+        * GET - /:id/edit
+        * POST
 
