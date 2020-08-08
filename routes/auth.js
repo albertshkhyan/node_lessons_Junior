@@ -86,54 +86,32 @@ router.get("/logout", (req, res) => {
     })
 });
 
-//NOTE - 
+// 
 router.post("/register", registerValidator, async (req, res) => {
-    // console.log('req -----------------------------', req.error());
     const errors = validationResult(req);
     // console.log('errors', errors);//Result { formatter: [Function: formatter], errors: [] }
-
-    console.log('errors.isEmpty()', errors.isEmpty(), !errors.isEmpty());
-    if (!errors.isEmpty()) {
-        console.log(errors.array());//errors.array() - [ { value: '', msg: 'Invalid value', param: 'email', location: 'body' } ]
-        req.flash('registerError', errors.array()[0].msg);
-        // return res.redirect('/auth/login#register');
-        return res.status(422).redirect("/auth/login#register");
+    if (!errors.isEmpty()) {//if have  error
+        return res
+            .status(422)
+            .redirect("/auth/login#register");
     }
 
     try {
-        //# email must be unque
-        const { email, name, password, repeat } = req.body;
-        // Store hash in your password DB.
+        const { email, name, password } = req.body;
+        //"salt round" - controls how long it takes to compute a single BCrypt hash. Default hash round is 10. -> $2a$10$6dppmOUfbTt1sJeBdsRo5.d0RG2iR/zDQHiEDdeuKozIVXO.Wy0w.
         const hash = await bcrypt.hash(password, 10);//Asynchronously generates a hash for the given string.
-        /**
-         *  "salt round" - controls how long it takes to compute a single BCrypt hash.
-          Default hash round is 10.
-         */
 
-        // console.log('hash', hash);// $2a$10$6dppmOUfbTt1sJeBdsRo5.d0RG2iR/zDQHiEDdeuKozIVXO.Wy0w.
+        //# now for first we validate input field, then  if not  have  error continue, find  email in validator
 
-        //# check if user with email already exists?
-        const candidate = await User.findOne({ "email": email });//if not find email return null
-        // console.log('candidate check email ---------', candidate);//null || obj
-
-        if (!candidate) {
-            const user = new User({
-                name,
-                email,
-                password: hash,
-                cart: { items: [] }
-            });
-            await user.save();
-            res.redirect('login#login');
-            await transporter.sendMail(regMail(email))//sendMail(mailOptions)
-        } else {
-            //⚠ if a user was found, that means the user's email matches the entered email
-            // res.status(409).json({
-            //     error: "A user with that email has already registered. Please use a different email.."
-            // });
-            req.flash("registerError", "Email address already exists");
-            res.redirect('login#register');
-        }
+        const user = new User({
+            name,
+            email,
+            password: hash,
+            cart: { items: [] }
+        });
+        await user.save();
+        res.redirect('login#login');
+        await transporter.sendMail(regMail(email))//sendMail(mailOptions)
 
     } catch (err) {
         console.log('err', err);
@@ -215,8 +193,6 @@ router.get("/password/:token", async (req, res) => {
     }
 });
 
-
-
 router.post("/password", async (req, res) => {
     try {
         // console.log('POST - /password');
@@ -243,7 +219,7 @@ router.post("/password", async (req, res) => {
         console.log('err', err);
     }
 
-})
+});
 
 
 module.exports = router;

@@ -4,18 +4,14 @@ tags: []
 
 ---
 
-# Plan
+# Plan - Asyncronous validation and Impove Data
 
-* npm install nodemailer and nodemailer-sendgrid-transport
-* Work with auth route
-
-After registration of user send mail, that user. Successfully registration :)
-
-
-# nodemailer 
-def: designed (предназначенный) for sending emails.
-
-# nodemailer-sendgrid-transport
-def: access to API of sendgrid | that makes it possible to send through SendGrid's Web API!. | provide SMTP
+    *  do async validation in utils/validator.js -> extract mail validation from route, and transfer in  validator.js -> SINGLE RESPONSIBILITY
+    * use sanitaizers
+        .trim()
+        .normalizeEmail()
 
 
+        #sanitaizers - for protect database, 
+
+* 

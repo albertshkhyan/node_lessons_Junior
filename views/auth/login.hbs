@@ -31,9 +31,12 @@
     </div>
     <div id="register" class="col s6 offset-l3">
       <h2 class="center">Sign Up</h2>
-      {{#if registerError}}
+      {{!-- {{#if registerError}}
       <div class="alert alert-danger">{{registerError}}</div>
-      {{/if}}
+      {{/if}} --}}
+       {{#each registerError}}
+      <div class="alert alert-danger">{{this.msg}}</div>
+      {{/each}}
      <form action="/auth/register" method="POST">
          <div class="row">
           <div class="input-field col s12">
