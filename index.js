@@ -16,7 +16,6 @@ const orderRoutes = require("./routes/order");
 const loginRoutes = require('./routes/auth');
 
 const mongoose = require("mongoose");//lib of js ODM allows you to define strongly typed data schemas.
-
 //#midlewares
 const session = require("express-session");
 const MongoDBStore = require("connect-mongodb-session")(session);
@@ -36,6 +35,7 @@ const store = new MongoDBStore({
 const hbs = exphbs.create({//return object
     defaultLayout: "main",
     extname: "hbs",
+    helpers: require("./utils/hbs-helpers")
 });
 
 app.use(express.static(__dirname + '/public'));//Create a new middleware function to serve files from within a given root directory
@@ -45,7 +45,7 @@ app.use(express.urlencoded({ extended: true }));//true-> qs lib, parse req body 
 // Use the session middleware, for that, can use session object
 app.use(session({
     secret: keys.SESSION_SECRET,// secret parameter allows express-session to use it to encrypt the sessionId
-    resave: false,
+    resave: false,// Bydefault, sesssion save after every request, only save in session when change something, for example add in sesssion.user
     saveUninitialized: false,
     store
 }));
