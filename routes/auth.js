@@ -10,7 +10,7 @@ const resetMail = require("../emails/resetMail");
 const crypto = require("crypto");
 
 const { validationResult } = require("express-validator");
-const { registerValidator } = require("../utils/validators");
+const { registerValidator, loginValidator } = require("../utils/validators");
 // console.log('registerValidator', registerValidator);//validator.js functions
 
 
@@ -45,34 +45,35 @@ router.get("/login", (req, res) => {
     });
 });
 
-//
-router.post("/login", async (req, res) => {
+//NOTE - 
+router.post("/login", loginValidator, async (req, res) => {
     try {
-        const { email, password } = req.body;
-        const candidate = await User.findOne({ email });
+        const errorResult = validationResult(req);//extract error object  from req object
+        // console.log(' errorResult.array()',  errorResult.array());
+        if (!errorResult.isEmpty()) {
+            req.flash("loginError", errorResult.array());
+            return res.redirect('login#login');
+        }
+        // if (candidate) {
+        //compare passwords
+        // const areSame = await bcrypt.compare(password, candidate.password);//compare enetered password to db password
+        // console.log('areSame', areSame);
+        // if (areSame) {
 
-        if (candidate) {
-            //compare passwords
-            const areSame = await bcrypt.compare(password, candidate.password);//compare enetered password to db password
-            // console.log('areSame', areSame);
-            if (areSame) {
-                req.session.isAuthenticated = true;
-                req.session.user = candidate;
-                req.session.save((err) => {//save session in database
-                    if (err) throw err;
-                    res.redirect('/');
-                });
-            }
-            else {
-                req.flash("loginError", "Incorrect password");
-                res.redirect('login#login');
-            }
-        }
-        else {
-            //if not find candidate in DB (email not match)
-            req.flash("loginError", "No such user exists");
-            res.redirect('login#login');//if want to autmat add prefix not set / in first /login
-        }
+        const candidate = await User.findOne({ email: req.body.email });
+        // console.log('candidate -----------------------------------', candidate);
+        req.session.isAuthenticated = true;
+        req.session.user = candidate;
+        req.session.save((err) => {//save session in database
+            if (err) throw err;
+            res.redirect('/');
+        });
+        // }
+        // else {
+        //     req.flash("loginError", "Incorrect password");
+        //     res.redirect('login#login');
+        // }
+        // }
     } catch (err) {
         console.log('err', err);
     }

@@ -8,9 +8,9 @@
     </div>
     <div id="login" class="col s6 offset-l3">
       <h2 class="center">Login</h2>
-      {{#if loginError}}
-        <div class="alert alert-danger">{{loginError}}</div>
-      {{/if}}
+      {{#each loginError}}
+        <div class="alert alert-danger">{{this.msg}}</div>
+      {{/each}}
       <form action="/auth/login" method="POST">
         <div class="row">
           <div class="input-field col s12">
