@@ -19,6 +19,8 @@ const mongoose = require("mongoose");//lib of js ODM allows you to define strong
 //#midlewares
 const session = require("express-session");
 const MongoDBStore = require("connect-mongodb-session")(session);
+const errorMiddleware = require("./middlewares/error");
+
 
 const varMiddleware = require("./middlewares/variable");
 const userMiddleware = require("./middlewares/user");
@@ -69,6 +71,9 @@ app//work when go add page, and add new course
     .use("/courses", addRoutes);//works when from /add route redirect on /course
 app.use("/orders", orderRoutes);
 app.use("/auth", loginRoutes);
+
+//switch 404 error after all routes
+app.use(errorMiddleware);
 
 // Database Connection 
 (async () => {
