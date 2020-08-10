@@ -9,6 +9,7 @@ exports.registerValidator = [
         .isEmail()
         .withMessage("incorrect email")
         .custom(async (value) => {
+            
             const candidate = await User.findOne({ email: value });
             if (candidate) {
                 // throw new Error("Sorry that email already exist");//work
@@ -59,3 +60,14 @@ exports.loginValidator = [
 
 ]
 
+
+exports.courseValidator = [
+    body("title")
+        .isLength({min: 3})
+        .withMessage("The title must be at least 3 characters"),
+    body('price', "Incorrect price value")
+        .isNumeric(),
+    body("image", "Incorrect URL address")
+        .isURL()
+    
+]

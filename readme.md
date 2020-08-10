@@ -4,14 +4,6 @@ tags: []
 
 ---
 
-# Plan - Asyncronous validation and Impove Data
+# Plan - Course Validation
 
-    *  do async validation in utils/validator.js -> extract mail validation from route, and transfer in  validator.js -> SINGLE RESPONSIBILITY
-    * use sanitaizers
-        .trim()
-        .normalizeEmail()
-
-
-        #sanitaizers - for protect database, 
-
-* 
+* FIX THIS: When in inut write wrong value  then, click on submit  after that all dada cleared.

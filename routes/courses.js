@@ -3,7 +3,8 @@ const Course = require("../model/course");
 
 const router = Router();
 const ensureAuth = require("../middlewares/ensureAuth");
-
+const { courseValidator } = require("../utils/validators");
+const { validationResult } = require("express-validator");
 // const 
 
 function isOwner(user, course) {
@@ -51,7 +52,6 @@ router.get("/:id/edit", ensureAuth, async (req, res) => {
         }
 
         let course = await Course.findById(req.params.id);
-        console.log('course', course);
 
         //GET - protect routes of course edit
         if (!isOwner(req.user, course)) {
@@ -63,6 +63,7 @@ router.get("/:id/edit", ensureAuth, async (req, res) => {
         res.render("courseEdit", {
             title: `${course.title}`,
             course
+
         });
     } catch (err) {
         console.log('err', err);
@@ -71,11 +72,32 @@ router.get("/:id/edit", ensureAuth, async (req, res) => {
 });
 
 
-router.post("/edit", ensureAuth, async (req, res) => {
+router.post("/edit", ensureAuth, courseValidator, async (req, res) => {
     try {
-        const { id } = req.body;
+        const { id, title, price, image } = req.body;
+        console.log('req.body', req.body);
+
+        const errorResult = validationResult(req);//extract error object from req object
+        if (!errorResult.isEmpty()) {
+            // console.log('errorResult.array()', errorResult.array());
+            ////courseEdit.hbs - this page  is pretect by course id, for  this we cant just render
+            // return res.render('courseEdit', {
+            //     courseError: errorResult.array(),
+            //     data: {
+            //         title,
+            //         price,
+            //         image
+            //     }
+            // });
+            ////OR just do redirect wihtout show  validation, 
+            // req.flash('courseError', errorResult.array())
+            return res
+                .status(422)
+                .redirect(`/courses/${id}/edit?allow=true`)
+        }
+
         const course = await Course.findById(id);
-        if(!isOwner(req.user, course)) {
+        if (!isOwner(req.user, course)) {
             return res.redirect('/');
         }
         // await Course.findByIdAndUpdate(id, req.body);//for not do additional request on DB, using Object.assign
