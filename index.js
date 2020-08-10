@@ -14,6 +14,7 @@ const addRoutes = require("./routes/add");
 const cartRoutes = require('./routes/cart');
 const orderRoutes = require("./routes/order");
 const loginRoutes = require('./routes/auth');
+const profileRoutes = require('./routes/profile');
 
 const mongoose = require("mongoose");//lib of js ODM allows you to define strongly typed data schemas.
 //#midlewares
@@ -71,6 +72,8 @@ app//work when go add page, and add new course
     .use("/courses", addRoutes);//works when from /add route redirect on /course
 app.use("/orders", orderRoutes);
 app.use("/auth", loginRoutes);
+app.use('/profile', profileRoutes);
+
 
 //switch 404 error after all routes
 app.use(errorMiddleware);

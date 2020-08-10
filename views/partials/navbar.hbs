@@ -18,35 +18,44 @@
 
 
                     {{#if isAuth}}
-                        {{#if isAdd}}
-                        <li class="active"><a href="/add">Add course</a></li>
-                        {{else}}
-                        <li><a href="/add">Add Courses</a></li>
-                        {{/if}}
+                    {{#if isAdd}}
+                    <li class="active"><a href="/add">Add course</a></li>
+                    {{else}}
+                    <li><a href="/add">Add Courses</a></li>
+                    {{/if}}
 
-                        {{#if isCart}}
-                        <li class="active cartItem">
-                            <a href="/cart" class="flexible  aCenter jCenter">
-                                <img src="https://image.flaticon.com/icons/png/512/263/263142.png" alt="cart">
-                                <span>Cart</span>
-                            </a>
-                        </li>
-                        {{else}}
-                        <li class="cartItem ">
-                            <a href="/cart" class="flexible  aCenter jCenter">
-                                <img src="https://image.flaticon.com/icons/png/512/263/263142.png" alt="cart">
-                                <span>Cart</span>
-                            </a>
-                        </li>
-                        {{/if}}
+                    {{#if isCart}}
+                    <li class="active cartItem">
+                        <a href="/cart" class="flexible  aCenter jCenter">
+                            <img src="https://image.flaticon.com/icons/png/512/263/263142.png" alt="cart">
+                            <span>Cart</span>
+                        </a>
+                    </li>
+                    {{else}}
+                    <li class="cartItem ">
+                        <a href="/cart" class="flexible  aCenter jCenter">
+                            <img src="https://image.flaticon.com/icons/png/512/263/263142.png" alt="cart">
+                            <span>Cart</span>
+                        </a>
+                    </li>
+                    {{/if}}
 
-                        {{#if isOrder}}
-                        <li class="active"><a href="/orders">Order</a></li>
-                        {{else}}
-                        <li><a href="/orders">Order</a></li>
-                        {{/if}}
-             
-                        <li><a href="/auth/logout">Logout</a></li>
+                    {{#if isOrder}}
+                    <li class="active"><a href="/orders">Order</a></li>
+                    {{else}}
+                    <li><a href="/orders">Order</a></li>
+                    {{/if}}
+
+
+
+                    {{#if isProfile}}
+                    <li class="active"><a href="/profile">Profile</a></li>
+                    {{else}}
+                    <li><a href="/profile">Profile</a></li>
+                    {{/if}}
+
+                    <li><a href="/auth/logout">Logout</a></li>
+
 
                     {{else}}
 
@@ -55,6 +64,7 @@
                     {{else}}
                     <li><a href="/auth/login">Login</a></li>
                     {{/if}}
+
 
                     {{/if}}
 

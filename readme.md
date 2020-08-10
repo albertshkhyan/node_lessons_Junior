@@ -4,6 +4,4 @@ tags: []
 
 ---
 
-# Plan - Course Validation
-
-* FIX THIS: When in inut write wrong value  then, click on submit  after that all dada cleared.
+# 
