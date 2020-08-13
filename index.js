@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express();
+const path = require('path');
 
 const keys = require("./keys");
 
@@ -21,6 +22,7 @@ const mongoose = require("mongoose");//lib of js ODM allows you to define strong
 const session = require("express-session");
 const MongoDBStore = require("connect-mongodb-session")(session);
 const errorMiddleware = require("./middlewares/error");
+const fileMiddleware = require("./middlewares/file");
 
 
 const varMiddleware = require("./middlewares/variable");
@@ -41,7 +43,11 @@ const hbs = exphbs.create({//return object
     helpers: require("./utils/hbs-helpers")
 });
 
-app.use(express.static(__dirname + '/public'));//Create a new middleware function to serve files from within a given root directory
+app.use(express.static(path.join(__dirname, '/public')));//Create a new middleware function to serve files from within a given root directory
+
+app.use(express.static(path.join(__dirname, "upload")));
+console.log(path.join(__dirname, "upload"));
+
 
 app.use(express.urlencoded({ extended: true }));//true-> qs lib, parse req body <- working
 
@@ -52,6 +58,8 @@ app.use(session({
     saveUninitialized: false,
     store
 }));
+//after session and before csrf we switch file middleware
+app.use(fileMiddleware.single("avatar"));//Name of the multipart form field to process. Multer.File` object populated by `single()` middleware. 
 app.use(flash());
 app.use(csurf());//protect all forms
 

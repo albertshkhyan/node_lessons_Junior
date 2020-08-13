@@ -8,16 +8,14 @@
         <p>Not have avatar</p>
     </div>
     <div class="col s6">
-        <div class="row">
-            <p>Your email: <span>{{user.email}}</span></p>
-            <div class="input-field col s12">
-                <input name="name" id="name" type="text" class="validate" value="{{user.name}}" required>
-                <label class="active" for="name">Name</label>
+        <form action="/profile" method="POST" enctype="multipart/form-data">
+            <div class="row">
+                <p>Your email: <span>{{user.email}}</span></p>
+                <div class="input-field col s12">
+                    <input name="name" id="name" type="text" class="validate" value="{{user.name}}" required>
+                    <label class="active" for="name">Name</label>
+                </div>
             </div>
-        </div>
-
-
-        <form action="/profile" method="POST">
             <div class="file-field input-field">
                 <div class="btn">
                     <span>Avatar</span>
@@ -28,6 +26,9 @@
                 </div>
             </div>
             <button class="btn btn-large" type="submit">change</button>
+
+            <input type="text" name="_csrf" value="{{csrf}}" hidden>
+
         </form>
     </div>
 </div>
