@@ -23,6 +23,8 @@ tags: []
         Potential errors
             * CONSOLE - Failed to load resource: the server responded with a status of 500 (Internal Server Error)
             IN PAGE - Error: ENOENT: no such file or directory, open 'D:\uploads\avatar-2020-08-13 21:34:29_901-me1.JPG' 
+                this happen becouse not match directory of file name
+                    For fix this, globas search folder name
                 error occurd becouse - not express.static
  2. File upload
     *

@@ -45,8 +45,7 @@ const hbs = exphbs.create({//return object
 
 app.use(express.static(path.join(__dirname, '/public')));//Create a new middleware function to serve files from within a given root directory
 
-app.use(express.static(path.join(__dirname, "upload")));
-console.log(path.join(__dirname, "upload"));
+app.use(express.static(path.join(__dirname, "uploads")));
 
 
 app.use(express.urlencoded({ extended: true }));//true-> qs lib, parse req body <- working

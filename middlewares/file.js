@@ -12,7 +12,6 @@ const moment = require('moment');
 
 const storageConfigs = multer.diskStorage({
     destination(req, file, cb) {//A string or function that determines the destination 📁 path for uploaded files. | folder in which will store upload files 
-        console.log('file storageConfigs', file);
         console.log("FOLDER NAME FOR UPLOAD FILES ");
         cb(null, "uploads");
     },
@@ -28,8 +27,8 @@ const storageConfigs = multer.diskStorage({
             }
          */
 
-        const uniqueName = moment().format('YYYY-MM-DD HH:mm:ss_SSS');
-        console.log("unque name is" - `${file.fieldname}-${uniqueName}-${file.originalname}`);
+        const uniqueName = moment().format('YYYY-MM-DD HH-mm-ss_SSS');
+        // console.log("unque name is" - `${file.fieldname}-${uniqueName}-${file.originalname}`);
         cb(null, `${file.fieldname}-${uniqueName}-${file.originalname}`);//originalname is require
     }
 });//Returns a StorageEngine implementation configured to store files on the local file system.
@@ -38,7 +37,6 @@ const storageConfigs = multer.diskStorage({
 const allowTypes = ["image/jpg", "image/jpeg", "image/png"];//mime-types
 
 const acceptFiles = (req, file, cb) => {//Set this to a function to control which files should be uploaded and which should be skipped.
-    console.log('file acceptFiles', file);
     if (allowTypes.includes(file.mimetype)) {
         console.log('FILE is ACCEPTED');
         cb(null, true);
