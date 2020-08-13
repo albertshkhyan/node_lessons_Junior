@@ -176,3 +176,9 @@ svg {
     text-align: center;
   }
 }
+
+/*avatar image*/
+
+.image-container > img {
+  width: 50%;
+}

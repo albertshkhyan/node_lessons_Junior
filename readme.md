@@ -27,7 +27,10 @@ tags: []
                     For fix this, globas search folder name
                 error occurd becouse - not express.static
  2. File upload
-    *
-    *
-    *
+    * check req.file 
+        * now we have image in local system, now we must add uplodaded image in DB (image - avatar of user)
+        * after post request we get user enterd name, then we must add new key in user object (avatartUrl)
+    * POTENTIAL ERROR   
+        * GET http://localhost:8080/uploads/avatar-2020-08-13%2023-37-06_855-A-for-cv.png 404 (Not Found)
+            * FOR FIX THIS - add prefix uploads in express.static middleware
     *

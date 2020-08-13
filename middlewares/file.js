@@ -17,7 +17,6 @@ const storageConfigs = multer.diskStorage({
     },
 
     filename(req, file, cb) {//A function that determines the name of the uploaded file.📰
-        console.log('file filename - ', file);
         /**
          * file acceptFiles {
             fieldname: 'avatar',
