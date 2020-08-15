@@ -23,6 +23,7 @@ const session = require("express-session");
 const MongoDBStore = require("connect-mongodb-session")(session);
 const errorMiddleware = require("./middlewares/error");
 const fileMiddleware = require("./middlewares/file");
+const helmet = require('helmet');
 
 
 const varMiddleware = require("./middlewares/variable");
@@ -60,6 +61,7 @@ app.use(session({
 }));
 //after session and before csrf we switch file middleware
 app.use(fileMiddleware.single("avatar"));//Name of the multipart form field to process. Multer.File` object populated by `single()` middleware. 
+app.use(helmet());//switch 11 small middlewares, which add some headers in response, for example protect XSS (cross-site-scripting) atack and etc.
 app.use(flash());
 app.use(csurf());//protect all forms
 
