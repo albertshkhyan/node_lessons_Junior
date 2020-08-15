@@ -31,7 +31,7 @@ const flash = require("connect-flash");//With the flash middleware in place, all
 
 
 //With MongoDBStore class we crete instance that have config of session in db
-const store = new MongoDBStore({
+const sessionStore = new MongoDBStore({
     uri: keys.MONGODB_URI,
     collection: 'sessions'//like table name
 });
@@ -55,7 +55,8 @@ app.use(session({
     secret: keys.SESSION_SECRET,// secret parameter allows express-session to use it to encrypt the sessionId
     resave: false,// Bydefault, sesssion save after every request, only save in session when change something, for example add in sesssion.user
     saveUninitialized: false,
-    store
+    cookie: { maxAge: 24 * 60 * 60 * 1000 },//expire time is one day
+    store: sessionStore
 }));
 //after session and before csrf we switch file middleware
 app.use(fileMiddleware.single("avatar"));//Name of the multipart form field to process. Multer.File` object populated by `single()` middleware. 
