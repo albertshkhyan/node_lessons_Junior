@@ -61,7 +61,22 @@ app.use(session({
 }));
 //after session and before csrf we switch file middleware
 app.use(fileMiddleware.single("avatar"));//Name of the multipart form field to process. Multer.File` object populated by `single()` middleware. 
+
+//NOTE
 app.use(helmet());//switch 11 small middlewares, which add some headers in response, for example protect XSS (cross-site-scripting) atack and etc.
+
+//content security policy, allow all
+app.use(
+    helmet.contentSecurityPolicy({
+        directives: {
+            "img-src": "*",//Defines valid sources of images.
+            defaultSrc: ["'self'"],
+            styleSrc: ["'self'", "https://cdnjs.cloudflare.com"],//<link />
+            scriptSrc:  ["'self'", "https://cdnjs.cloudflare.com"]//<script></script>
+          }
+    })
+  );
+
 app.use(flash());
 app.use(csurf());//protect all forms
 

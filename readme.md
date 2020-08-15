@@ -9,3 +9,6 @@ tags: []
     *Helmet помогает защитить приложения Express, задав различные заголовки HTTP. Это не серебряная пуля, но может помочь!
     * install helmet package
     * connect helmet middleware
+    ⚠ problem of CSP (Content Security Policy)
+        * helmet.contentSecurityPolicy
+             "img-src": "*"

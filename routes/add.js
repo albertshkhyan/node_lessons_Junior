@@ -15,6 +15,8 @@ router.get('/', ensureAuth, (req, res) => {
 
 router.post('/', ensureAuth, courseValidator, async (req, res) => {
     //when add new link
+    
+    console.log('koko', koko);
     try {
         //#for first we  will check actually valid inputs value or not
         const { title, price, image } = req.body;

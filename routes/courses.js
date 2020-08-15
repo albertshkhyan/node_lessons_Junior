@@ -45,7 +45,7 @@ router.get('/', async (req, res) => {
     });
 });
 
-router.get("/:id/edit", ensureAuth, async (req, res) => {
+router.get("/:id/edit", ensureAuth, courseValidator, async (req, res) => {
     try {
         if (!req.query.allow) {
             return res.redirect('/');
@@ -62,7 +62,8 @@ router.get("/:id/edit", ensureAuth, async (req, res) => {
         course = { title, id, price, image };
         res.render("courseEdit", {
             title: `${course.title}`,
-            course
+            course,
+            courseError:req.flash("courseError"),
 
         });
     } catch (err) {
@@ -75,11 +76,9 @@ router.get("/:id/edit", ensureAuth, async (req, res) => {
 router.post("/edit", ensureAuth, courseValidator, async (req, res) => {
     try {
         const { id, title, price, image } = req.body;
-        console.log('req.body', req.body);
 
         const errorResult = validationResult(req);//extract error object from req object
         if (!errorResult.isEmpty()) {
-            // console.log('errorResult.array()', errorResult.array());
             ////courseEdit.hbs - this page  is pretect by course id, for  this we cant just render
             // return res.render('courseEdit', {
             //     courseError: errorResult.array(),
@@ -90,7 +89,7 @@ router.post("/edit", ensureAuth, courseValidator, async (req, res) => {
             //     }
             // });
             ////OR just do redirect wihtout show  validation, 
-            // req.flash('courseError', errorResult.array())
+            req.flash("courseError", errorResult.array());
             return res
                 .status(422)
                 .redirect(`/courses/${id}/edit?allow=true`)

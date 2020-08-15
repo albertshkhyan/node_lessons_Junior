@@ -60,7 +60,7 @@ exports.loginValidator = [
 
 ]
 
-
+ 
 exports.courseValidator = [
     body("title")
         .isLength({min: 3})
