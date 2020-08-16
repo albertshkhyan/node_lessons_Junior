@@ -4,11 +4,25 @@ tags: []
 
 ---
 
-# adding headers
-* For protect our express app we must add sepcail headers, for this we will use helmet package.
-    *Helmet помогает защитить приложения Express, задав различные заголовки HTTP. Это не серебряная пуля, но может помочь!
-    * install helmet package
-    * connect helmet middleware
-    ⚠ problem of CSP (Content Security Policy)
-        * helmet.contentSecurityPolicy
-             "img-src": "*"
+# How deploy node app to Heroku | How to host web app
+
+* Heroku (Clud application platform) - is service which allow deploy app to cloud service. | Heroku is a platform as a service (PaaS - Platform as a service) that enables developers to build, run, and operate applications entirely in the cloud.
+
+    * Platform as a service - provide cloude services
+        * Heroku
+        * Firebase
+        * Google app engine
+
+* Start
+    * https://www.heroku.com/ -> Sign Up
+    * after sign up -> heroku cli download, for interact with heroku
+    * DEPLOYING
+        *Getting started
+            * Command Line
+                * heroku login  -  After you install the CLI, run the heroku login command.
+                * heroku create -  Now you’re ready to create your first Heroku app:
+            * reveal config vars - add development keys
+            * Deploying with git
+                * add development keys
+                
+

@@ -115,6 +115,7 @@ app.use(errorMiddleware);
             useFindAndModify: false
         });//connect on mongoDB
         const PORT = process.env.PORT || 8080;
+        console.log('process.env.PORT', process.env.PORT);
         app.listen(PORT);
     } catch (err) {
         //if connect call reject
