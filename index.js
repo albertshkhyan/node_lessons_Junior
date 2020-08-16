@@ -24,6 +24,7 @@ const MongoDBStore = require("connect-mongodb-session")(session);
 const errorMiddleware = require("./middlewares/error");
 const fileMiddleware = require("./middlewares/file");
 const helmet = require('helmet');
+const compression = require('compression');
 
 
 const varMiddleware = require("./middlewares/variable");
@@ -79,6 +80,8 @@ app.use(
 
 app.use(flash());
 app.use(csurf());//protect all forms
+app.use(compression(``));//The middleware will attempt to compress response bodies for all request that traverse through the middleware
+
 
 //custom middleware, in correct place we must switch this middleware
 app.use(varMiddleware);
