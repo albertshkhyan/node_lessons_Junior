@@ -1,0 +1,17 @@
+{
+    "workbench.colorCustomizations": {
+        "[Soft Colors]": {},
+        "[Monokai]": {
+            "tab.activeBackground": "#b3b3ae"
+        },
+        "[]": {},
+        "[Material Dark]": {
+            "tab.activeBackground": "#0FB8D2"
+        },
+        "tab.activeBackground": "#FFFFFF",
+        "tab.activeForeground": "#000000",
+        "tab.inactiveForeground": "#FFFFFF",
+        "tab.inactiveBackground": "#000000",
+        "tab.border": "#FFFFFF"
+    }
+}

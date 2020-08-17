@@ -4,6 +4,7 @@ tags: []
 
 ---
 
+
 # How deploy node app to Heroku | How to host web app
 
 * Heroku (Clud application platform) - is service which allow deploy app to cloud service. | Heroku is a platform as a service (PaaS - Platform as a service) that enables developers to build, run, and operate applications entirely in the cloud.
@@ -24,5 +25,9 @@ tags: []
             * reveal config vars - add development keys
             * Deploying with git
                 * add development keys
+                    git add .
+                    heroku git:remote heroku_app_name 
+                    git push heroku master
                 
 
+⚠ my mistake : not push in heroku repository
