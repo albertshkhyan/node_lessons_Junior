@@ -1,5 +1,5 @@
 {
-  "name": "nodejs-junior-lessons",
+  "name": "NodeJS-Junior-Lessons",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -8,13 +8,36 @@
     "start": "node index.js",
     "dev": "nodemon index.js"
   },
-  "keywords": [
-    "nodeJS",
-    "js"
-  ],
-  "author": "Alik Shkhyan <alikshkhyan@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/albertshkhyan/node_lessons_Junior.git"
+  },
+  "keywords": [],
+  "author": "",
   "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/albertshkhyan/node_lessons_Junior/issues"
+  },
+  "homepage": "https://github.com/albertshkhyan/node_lessons_Junior#readme",
   "devDependencies": {
     "nodemon": "^2.0.4"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "compression": "^1.7.4",
+    "connect-flash": "^0.1.1",
+    "connect-mongodb-session": "^2.3.3",
+    "csurf": "^1.11.0",
+    "express": "^4.17.1",
+    "express-handlebars": "^5.0.0",
+    "express-session": "^1.17.1",
+    "express-validator": "^6.6.1",
+    "helmet": "^4.1.0",
+    "moment": "^2.27.0",
+    "mongoose": "^5.9.25",
+    "multer": "^1.4.2",
+    "nodemailer": "^6.4.11",
+    "nodemailer-sendgrid-transport": "^0.2.0",
+    "uuid": "^8.2.0"
   }
 }

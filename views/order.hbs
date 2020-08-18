@@ -1,0 +1,25 @@
+<h2>My Orders</h2>
+{{#if orders.length}}
+{{#each orders}}
+<div class="row">
+    <div class="hoverable col s12 m5 offset-l3">
+        <div class="card-panel">
+            <div class="order">
+                <span>Order: {{this._id}}</span>
+            </div>
+            <div class="date">
+                <span>{{this.data}}</span>
+            </div>
+            <div class="infoUser">
+                {{this.user.name}} <span>({{this.user.userId.email}})</span>
+            </div>
+            <ol>
+                {{#each this.courses}}
+                <li>{{this.course.title}} <span>(x{{this.count}})</span></li>
+                {{/each}}
+            </ol>
+        </div>
+    </div>
+</div>
+{{/each}}
+{{/if}}

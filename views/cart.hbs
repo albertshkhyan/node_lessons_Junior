@@ -1,0 +1,43 @@
+<div class="cart">
+    <h2>Cart</h2>
+    {{#if courses.length}}
+    <table class="highlight">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Course count</th>
+                <th>action</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {{#each courses}}
+            <tr>
+                <td>{{this.title}}</td>
+                <td>{{this.count}}</td>
+                <td>
+                    <button class="wbtn-floating btn-small waves-effect waves-light red js-remove"
+                        data-csrf="{{@root.csrf}}"
+                        data-id="{{this.id}}">delete</button>
+                </td>
+
+
+            </tr>
+            {{/each}}
+
+        </tbody>
+    </table>
+    <div class="price-content flexible aCenter">
+        <strong>Total price of courses : </strong>
+        <p class="price">
+            <span>{{this.price}}</span>
+        </p>
+    </div>
+
+    <form action="/orders" method="POST">
+        <input type="text" name="_csrf" value="{{csrf}}" hidden>
+        <button class="btn orange" type="submit">confirm order</button>
+    </form>
+
+    {{/if}}
+</div>

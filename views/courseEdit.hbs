@@ -1,0 +1,39 @@
+<h2>Edit {{title}} course</h2>
+
+
+<form method="POST" action="/courses/edit">
+    {{#each courseError}}
+    <div class="alert alert-danger">{{this.msg}}</div>
+    {{/each}}
+    <div class="input-field">
+        <input name="title" id="title" type="text" class="validate" value="{{course.title}}" required>
+        <label for="title">Name of cours</label>
+        <span class="helper-text" data-error="wrong" data-success="right">Helper text</span>
+    </div>
+
+    <div class="input-field">
+        <input name="price" id="price" type="text" class="validate" value="{{course.price}}" required>
+        <label for="price">Price of course</label>
+        <span class="helper-text" data-error="wrong" data-success="right">Helper text</span>
+    </div>
+
+    <div class="input-field">
+        <input name="image" id="addImage" type="text" class="validate" value="{{course.image}}" required>
+        <label for="addImage">URL of image</label>
+        <span class="helper-text" data-error="wrong" data-success="right">Helper text</span>
+    </div>
+
+    <input type="text" hidden name="id" value="{{course.id}}">
+    <input type="text" name="_csrf" value="{{csrf}}" hidden>
+
+    <button type="submit" class="btn btn-primary">Edit course</button>
+
+</form>
+
+
+<form action="/courses/remove" method="POST">
+    <input name="id" type="text" value="{{course.id}}" hidden>
+    <input type="text" name="_csrf" value="{{csrf}}" hidden>
+
+    <button type="submit" class="btn red">Remove course</button>
+</form>

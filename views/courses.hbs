@@ -1,0 +1,38 @@
+<h1>Courses</h1>
+{{#if course.length}}
+{{#each course}}
+<div class="row courses-container">
+    <div class="col s6 offset-s3">
+        <div class="card hoverable">
+            <div class="card-image">
+                <img src={{this.image}} alt="{{this.title}}">
+            </div>  
+            <div class="card-content">
+                <span class="card-title">{{this.title}}</span>
+                <p class="price">{{this.price}}</p>
+            </div>
+            <div class="card-action flexible jBetween aCenter">
+                <a href="/courses/{{this.id}}" target="_blank"><b>Open Course</b></a>
+                {{#ifeq this.userID @root.userID}}
+                    <a href="/courses/{{this.id}}/edit?allow=true" target="_blank"><b>Edit Course</b></a>
+                {{/ifeq}}
+                {{!-- <pre>
+                    debugg 
+                    {{this.userID}}
+                    {{@root.userID}} 
+                </pre> --}}
+                {{#if @root.isAuth }}
+                <form method="POST"git  action="/cart/add">
+                    <input type="text" hidden value={{this.id}} name="id">
+                    <input type="text" name="_csrf" value="{{@root.csrf}}" hidden>
+                    <button class="btn btn-primary">Add course</button>
+                </form>
+                {{/if}}
+            </div>
+        </div>
+    </div>
+</div>
+{{/each}}
+{{else}}
+<h2>no courses</h2>
+{{/if}}
