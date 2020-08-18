@@ -115,18 +115,21 @@ app.use(errorMiddleware);
             useFindAndModify: false
         });//connect on mongoDB
         const PORT = process.env.PORT || 8080;
+        const host = '0.0.0.0';
         // console.log('process.env.PORT', process.env.PORT);
         // app.listen(PORT);
-        console.log('process.env.PORT---', process.env.PORT);
+        // console.log('process.env.PORT---', process.env.PORT);
         // app.listen(process.env.PORT || 8080);
-        app.listen(PORT, '0.0.0.0', (err) => {
+        app.listen(PORT, host, (err) => {
+            // app.listen(process.env.PORT || 8080, (err) => {
             if (err) {
                 throw err;
             }
+            console.log("server is listening");
         });
         //if connect call reject
     }
-    catch(err) {
+    catch (err) {
         console.log('err', err);
     }
 })();
