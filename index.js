@@ -118,7 +118,10 @@ app.use(errorMiddleware);
         // console.log('process.env.PORT', process.env.PORT);
         // app.listen(PORT);
         console.log('process.env.PORT---', process.env.PORT);
-        app.listen(process.env.PORT || 8080);
+        // app.listen(process.env.PORT || 8080);
+        app.listen(process.env.PORT, '0.0.0.0', (err) => {
+            throw err;
+        });
         //if connect call reject
     }
     catch(err) {
