@@ -41,7 +41,7 @@ router.get('/', async (req, res) => {
         course,
         isCourses: true,
         title: "Courses",
-        userID: req.user._id.toString(),//current user 
+        userID: req.user ? req.user._id.toString() : null,//current user 
     });
 });
 
