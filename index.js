@@ -117,7 +117,7 @@ app.use(errorMiddleware);
         // const PORT = process.env.PORT || 8080;
         // console.log('process.env.PORT', process.env.PORT);
         // app.listen(PORT);
-        console.log('process.env.PORT', process.env.PORT);
+        console.log('process.env.PORT---', process.env.PORT);
         app.listen(process.env.PORT || 5000);
         //if connect call reject
     }
