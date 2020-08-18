@@ -114,10 +114,10 @@ app.use(errorMiddleware);
             useUnifiedTopology: true,
             useFindAndModify: false
         });//connect on mongoDB
-        const PORT = process.env.PORT || 8080;
-        console.log('process.env.PORT', process.env.PORT);
-        app.listen(PORT);
-    } catch (err) {
+        // const PORT = process.env.PORT || 8080;
+        // console.log('process.env.PORT', process.env.PORT);
+        // app.listen(PORT);
+        app.listen(process.env.PORT || 5000);
         //if connect call reject
         console.log('err', err);
     }

@@ -17,12 +17,13 @@ tags: []
 * Start
     * https://www.heroku.com/ -> Sign Up
     * after sign up -> heroku cli download, for interact with heroku
-    * DEPLOYING
         *Getting started
             * Command Line
                 * heroku login  -  After you install the CLI, run the heroku login command.
                 * heroku create -  Now you’re ready to create your first Heroku app:
-            * reveal config vars - add development keys
+        * DEPLOYING
+            Before deoploy we must 
+                * reveal config vars - add development keys
             * Deploying with git
                 * add development keys
                     git add .
