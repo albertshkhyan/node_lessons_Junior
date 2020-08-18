@@ -1,1 +1,1 @@
-web: node index.jsheroku logs
+worker: node index.js
